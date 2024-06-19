@@ -15,7 +15,7 @@ export default function Navbar({ username }: { username: string | undefined }) {
   }
 
   return (
-    <header className="bg-gray-600 w-full p-6">
+    <header className="bg-gray-600 w-full p-6 text-black">
       <nav className="w-full flex justify-between items-center">
         <Link className="btn" href="/">Home</Link>
         <Link className="btn" href="/dashboard">Dashboard</Link>

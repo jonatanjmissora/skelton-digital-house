@@ -6,6 +6,7 @@ export async function POST(request: NextRequest) {
   try {
 
     cookies().delete('username')
+    cookies().delete('userid')
 
     return new Response(JSON.stringify({}), {
       status: 200,
