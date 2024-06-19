@@ -29,5 +29,6 @@ export const login = async ({ email, password }: LoginTypes) => {
     console.log(`${res.status} - ${res.statusText}`)
     throw new Error("Failed to post: " + "/api/auth/login")
   }
+
   return res.json();
 }

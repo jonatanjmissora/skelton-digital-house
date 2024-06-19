@@ -1,5 +1,5 @@
 import { cookies, headers } from "next/headers"
-import { NextRequest } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
 type UserDataTypes = {
   id: number;
@@ -15,6 +15,7 @@ export async function GET(request: NextRequest) {
 
     const token = cookies().get('token')?.value ?? ''
     const userId = cookies().get('userid')?.value ?? ''
+    cookies().set("route_value", "some_value_api_routes", { expires: new Date(new Date().getTime() + 600000) });
 
     if (!token || !userId) return
 
@@ -32,11 +33,14 @@ export async function GET(request: NextRequest) {
     const username = `${userData.firstname} ${userData.lastname}`
     cookies().set('username', username, { expires: new Date(new Date().getTime() + 600000) })
 
-    return new Response(JSON.stringify({ userData }), {
+    const response = new NextResponse(JSON.stringify({ userData }), {
       status: 200,
     })
+    response.cookies.set("username", username)
+    return response
+
   } catch (e) {
-    return new Response(JSON.stringify({
+    return new NextResponse(JSON.stringify({
       error: 'Internal server error'
     }), {
       status: 500,
