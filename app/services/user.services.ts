@@ -1,6 +1,6 @@
 import { cookies, headers } from "next/headers";
 
-export const getUserData = async (token: string, userId: string) => {
+export const getUserData = async () => {
 
   const res = await fetch(`http://localhost:3000/api/user`, {
     cache: 'no-cache',

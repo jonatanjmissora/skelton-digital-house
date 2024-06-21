@@ -1,6 +1,6 @@
 import { jwtDecode } from "jwt-decode";
 import { cookies } from "next/headers";
-import { NextRequest } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
 type JwtPayload = {
   username: string;
@@ -8,14 +8,16 @@ type JwtPayload = {
   exp: number;
 }
 
-type UserDataTypes = {
+type UserDataTypes = 
+  {
   id: number;
   firstname: string;
   lastname: string;
   dni: number;
   email: string
   phone: string;
-}
+  error?: string
+} 
 
 type AccountDataTypes = {
   id: number;
@@ -49,48 +51,58 @@ export async function POST(request: NextRequest) {
     cookies().set('token', loginData.token, { expires: new Date(new Date().getTime() + 600000) })
     cookies().set('userid', decodeToken.username, { expires: new Date(new Date().getTime() + 600000) })
 
-    /*
-    const userResp = await fetch(`https://digitalmoney.digitalhouse.com/api/users/${userId}`, {
-    method: 'GET',
-    headers: {
-              'Content-Type': 'application/json',
-              "Authorization": loginData.token
-              },
+//************************************************************************************* */
+
+    const userResp = await fetch(`https://digitalmoney.digitalhouse.com/api/users/${decodeToken.username}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        "Authorization": loginData.token
+        },
     })      
-
-    const userData : UserDataTypes = await userResp.json()
-    console.log("USERDATA :", userData)
-
-    if(loginData.error) {
-      throw new Error(loginData.error)
-    }
-
-    const username = `${userData.firstname} ${userData.lastname}`
-    const userid = userData.id.toString()
     
+    const userData : UserDataTypes = await userResp.json()
+    cookies().set(
+      'username',
+       JSON.stringify(`${userData.firstname} ${userData.lastname}`), 
+       { expires: new Date(new Date().getTime() + 600000) }
+      )
+    
+    if(userData.error) {
+      throw new Error(loginData.error)
+      }
+     
+//************************************************************************************* */
     const accountResp = await fetch(`https://digitalmoney.digitalhouse.com/api/account`, {
-    method: 'GET',
-    headers: {
-              'Content-Type': 'application/json',
-              "Authorization": loginData.token
-              },
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        "Authorization": loginData.token
+        },
     })      
 
     const accountData : AccountDataTypes = await accountResp.json()
-    console.log("ACCOUNTDATA :", accountData)
+    cookies().set(
+      'accountid', 
+      JSON.stringify(accountData.id), 
+      { expires: new Date(new Date().getTime() + 600000) }
+    )
 
-    cookies().set('username', username, { expires: new Date(new Date().getTime() + 600000) })
-    cookies().set('userid', userid, { expires: new Date(new Date().getTime() + 600000) })
-    */
+    if(userData.error) {
+      throw new Error(loginData.error)
+      }   
 
-    return new Response(JSON.stringify({}), {
+    return new NextResponse(JSON.stringify({}), {
       status: 200,
     })
   } catch (e) {
-    return new Response(JSON.stringify({
+    return new NextResponse(JSON.stringify({
       error: 'Internal server error'
     }), {
       status: 500,
     })
   }
 }
+
+
+

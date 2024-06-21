@@ -21,6 +21,11 @@ body {
   background: #ccc;
 }
 
+a {
+  border-bottom: 1px solid;
+  width: max-content
+}
+
 @layer utilities {
   .text-balance {
     text-wrap: balance;

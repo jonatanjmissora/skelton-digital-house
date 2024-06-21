@@ -5,8 +5,9 @@ export async function POST(request: NextRequest) {
 
   try {
 
-    cookies().delete('username')
-    cookies().delete('userid')
+    cookies().getAll().forEach((cookie) => {
+      cookies().delete(cookie.name);
+    });
 
     return new Response(JSON.stringify({}), {
       status: 200,

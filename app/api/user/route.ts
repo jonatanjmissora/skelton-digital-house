@@ -1,21 +1,21 @@
 import { cookies, headers } from "next/headers"
 import { NextRequest, NextResponse } from "next/server";
 
-type UserDataTypes = {
+export type UserDataTypes = {
   id: number;
   firstname: string;
   lastname: string;
   dni: number;
   email: string
   phone: string;
+  error: string;
 }
 
-export async function GET(request: NextRequest) {
+export async function GET(request: NextRequest, response: NextResponse) {
   try {
 
     const token = cookies().get('token')?.value ?? ''
     const userId = cookies().get('userid')?.value ?? ''
-    cookies().set("route_value", "some_value_api_routes", { expires: new Date(new Date().getTime() + 600000) });
 
     if (!token || !userId) return
 
@@ -28,17 +28,28 @@ export async function GET(request: NextRequest) {
     })
 
     const userData: UserDataTypes = await userResp.json()
-    console.log("USERDATA :", userData)
 
     const username = `${userData.firstname} ${userData.lastname}`
-    cookies().set('username', username, { expires: new Date(new Date().getTime() + 600000) })
+
+    // NO FUNCIONA NADA DE TODO ESTO
+    cookies().set('username2', username)
+    request.headers.set("username2", username)
+    const requestHeaders = new Headers(request.headers)
+    requestHeaders.set('username2', username)
 
     const response = new NextResponse(JSON.stringify({ userData }), {
       status: 200,
+      // NO FUNCIONA
+      //headers: requestHeaders
+      headers: {"username2":username}
     })
-    response.cookies.set("username", username)
-    return response
 
+    console.log(`***********************  RESPUESTA DEL ENDPOINT : API/USERS/${userId}`)
+    console.log(userData)
+
+    return new NextResponse(JSON.stringify(userData), {
+        status: 200,
+      })
   } catch (e) {
     return new NextResponse(JSON.stringify({
       error: 'Internal server error'
