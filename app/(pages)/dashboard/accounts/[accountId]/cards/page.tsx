@@ -1,4 +1,3 @@
-import { AccountDataTypes } from '@/app/api/accounts/route';
 import { AccountCardsDataTypes, getAccountCardsData, getAccountData } from '@/app/services/account.services';
 import { cookies } from 'next/headers';
 import Link from 'next/link'
@@ -6,9 +5,9 @@ import React from 'react'
 
 export default async function CardsPage() {
 
-const token = cookies().get('token')?.value ?? '';
-const accountId = cookies().get('accountid')?.value ?? '';
-const accountCardsData: AccountCardsDataTypes[] = await getAccountCardsData(accountId, token)
+  const token = cookies().get('token')?.value ?? '';
+  const accountId = cookies().get('accountid')?.value ?? '';
+  const accountCardsData: AccountCardsDataTypes[] = await getAccountCardsData(accountId, token)
 
   return (
     <>
@@ -32,11 +31,12 @@ const getLast4 = (num: number) => {
   return parseInt(numberStr.substr(-4), 10);
 }
 
-const CardRow = ({card}: {card: AccountCardsDataTypes}) => {
+const CardRow = async ({ card }: { card: AccountCardsDataTypes }) => {
+
   return (
     <div className='flex justify-between'>
       <span>terminada en {getLast4(card.number_id)}</span>
-      <button className='btn'>eliminar</button>
+      <Link href={`/dashboard/accounts/${card.account_id}/cards/${card.id}`} className='btn'>eliminar</Link>
     </div>
   )
 }
