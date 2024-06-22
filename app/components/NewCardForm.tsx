@@ -35,7 +35,7 @@ export default function NewCardForm({accountId, token}: {accountId: string, toke
         <label htmlFor="cardNumber">Numero de tarjeta</label>
         <input className='border border-gray-500 p-2 text-center' type="text" value={randomNumber()} readOnly name="randomCard"/>
         <button type='submit' className='btn'>Agregar tarjeta</button>
-        <Link href="/dashboard" className='btn'>Cancelar</Link>
+        <Link href={`/dashboard/accounts/${accountId}/cards`} className='btn'>Cancelar</Link>
     </form>
     
   )

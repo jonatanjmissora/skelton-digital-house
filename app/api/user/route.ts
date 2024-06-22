@@ -58,3 +58,40 @@ export async function GET(request: NextRequest, response: NextResponse) {
     })
   }
 }
+
+export async function PATCH(request: NextRequest) {
+  try {
+
+    const token = cookies().get('token')?.value ?? ''
+    //const userId = cookies().get('userid')?.value ?? ''
+
+    const { userId, newUser } = await request.json();
+
+    if (!token || !userId) return
+
+    const userEditResp = await fetch(`https://digitalmoney.digitalhouse.com/api/users/${userId}`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+        "Authorization": token
+      },
+      body: JSON.stringify(newUser)
+    })
+
+    const userEditData: UserDataTypes = await userEditResp.json()
+    //const username = `${userEditData.firstname} ${userEditData.lastname}`
+
+    console.log(`***********************  RESPUESTA DEL ENDPOINT : API/USERS/${userId}`)
+    console.log(userEditData)
+
+    return new NextResponse(JSON.stringify(userEditData), {
+        status: 200,
+      })
+  } catch (e) {
+    return new NextResponse(JSON.stringify({
+      error: 'Internal server error'
+    }), {
+      status: 500,
+    })
+  }
+}

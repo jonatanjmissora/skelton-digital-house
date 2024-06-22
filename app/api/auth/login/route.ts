@@ -41,6 +41,7 @@ export async function POST(request: NextRequest) {
   })
 
     const loginData = await loginResp.json()
+    console.log(`***********************  RESPUESTA DEL ENDPOINT : API/LOGIN`)
     console.log("LOGINDATA: ", loginData)
 
     if(loginData.error) {
@@ -62,6 +63,9 @@ export async function POST(request: NextRequest) {
     })      
     
     const userData : UserDataTypes = await userResp.json()
+    console.log(`***********************  RESPUESTA DEL ENDPOINT : API/USERS/${decodeToken.username}`)
+    console.log("USER DATA", userData)
+    
     cookies().set(
       'username',
        JSON.stringify(`${userData.firstname} ${userData.lastname}`), 
@@ -82,6 +86,9 @@ export async function POST(request: NextRequest) {
     })      
 
     const accountData : AccountDataTypes = await accountResp.json()
+    console.log(`***********************  RESPUESTA DEL ENDPOINT : API/ACCOUNT`)
+    console.log("ACCOUNT DATA", accountData)
+    
     cookies().set(
       'accountid', 
       JSON.stringify(accountData.id), 

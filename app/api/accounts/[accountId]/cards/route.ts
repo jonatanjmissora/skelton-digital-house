@@ -5,6 +5,7 @@ export async function GET(request: NextRequest) {
     try {
         const token = headers().get("authorization") ?? ""
         const accountId = request.url.split("/")[5];
+        
         const accountCardsResp = await fetch(`https://digitalmoney.digitalhouse.com/api/accounts/${accountId}/cards`, {
             cache: "no-cache",
             method: 'GET',

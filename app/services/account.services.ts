@@ -37,3 +37,9 @@ export const postNewCard = async (accountId: string, newCard: NewCardTypes, toke
 export const deleteCard = async (cardId: string, accountId: string, token: string) => {
     return await httpDelete(`/api/accounts/${accountId}/cards/${cardId}`, token)
 }
+
+export const getAccountCardData = async (cardId: string, accountId: string, token: string) => {
+
+    return await httpGet(`/api/accounts/${accountId}/cards/${cardId}`, token)
+
+}
