@@ -16,8 +16,8 @@ export async function GET(request: NextRequest) {
 
         const accountCardsData= await accountCardsResp.json()
 
-        console.log(`***********************  RESPUESTA DEL ENDPOINT : API/ACCOUNTS/${accountId}/Cards}`)
-        console.log(accountCardsData)
+        console.log(`***********************  RESPUESTA DEL ENDPOINT : API/ACCOUNTS/${accountId}/CARDS}`)
+        console.log("ACCOUNT CARDS", accountCardsData)
 
         return new NextResponse(JSON.stringify(accountCardsData), {
             status: 200,
@@ -50,7 +50,9 @@ export async function POST(request: NextRequest) {
     })
 
     const newCardData = await newCardResp.json()
-    console.log("NEWCARDDATA: ", newCardData)
+
+    console.log(`***********************  RESPUESTA DEL ENDPOINT : API/ACCOUNTS/${accountId}/CARDS}`)
+    console.log("NEW CARD: ", newCardData)
 
     if(newCardData.error) {
       throw new Error(newCardData.error)

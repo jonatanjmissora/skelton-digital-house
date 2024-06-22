@@ -36,6 +36,7 @@ const CardRow = async ({ card }: { card: AccountCardsDataTypes }) => {
   return (
     <div className='flex justify-between'>
       <span>terminada en {getLast4(card.number_id)}</span>
+      <span>id: {card.id}</span>
       <Link href={`/dashboard/accounts/${card.account_id}/cards/${card.id}`} className='btn'>eliminar</Link>
     </div>
   )

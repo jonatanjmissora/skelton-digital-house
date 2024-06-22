@@ -33,19 +33,18 @@ export const httpPost = async (endpoint: string, data?: object, token?: string) 
     return res.json();
 }
 
-export const httpDelete = async (endpoint: string, token?: string) => {
+export const httpDelete = async (endpoint: string, token: string) => {
+    console.log(" ************************ ************** ************EN SERVICES")
     const res = await fetch(`http://localhost:3000/${endpoint}`, {
         method: 'DELETE',
-        headers: !token
-            ? { 'Content-Type': 'application/json' }
-            : {
+        headers: {
                 'Content-Type': 'application/json',
                 "Authorization": token
             },
     });
     if (!res.ok) {
         console.log(`${res.status} - ${res.statusText}`)
-        throw new Error("Failed to post: " + endpoint)
+        throw new Error("Failed to delete: " + endpoint)
     }
 
     return res.json();

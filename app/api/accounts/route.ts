@@ -23,8 +23,8 @@ export async function GET() {
 
         const accountData= await accountResp.json()
 
-        console.log("***********************  RESPUESTA DEL ENDPOINT : API/ACCOUNT")
-        console.log(accountData)
+        console.log("***********************  RESPUESTA DEL ENDPOINT : API/ACCOUNTS")
+        console.log("ACCOUNT: ",accountData)
 
         return new NextResponse(JSON.stringify(accountData), {
             status: 200,
