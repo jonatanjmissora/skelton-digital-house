@@ -8,16 +8,16 @@ type JwtPayload = {
   exp: number;
 }
 
-type UserDataTypes = 
+type UserDataTypes =
   {
-  id: number;
-  firstname: string;
-  lastname: string;
-  dni: number;
-  email: string
-  phone: string;
-  error?: string
-} 
+    id: number;
+    firstname: string;
+    lastname: string;
+    dni: number;
+    email: string
+    phone: string;
+    error?: string
+  }
 
 type AccountDataTypes = {
   id: number;
@@ -25,6 +25,7 @@ type AccountDataTypes = {
   cvu: string;
   alias: string;
   available_amount: number;
+  error?: string
 }
 
 export async function POST(request: NextRequest) {
@@ -35,16 +36,16 @@ export async function POST(request: NextRequest) {
     const loginResp = await fetch("https://digitalmoney.digitalhouse.com/api/login", {
       method: 'POST',
       headers: {
-                'Content-Type': 'application/json',
-                },
+        'Content-Type': 'application/json',
+      },
       body: JSON.stringify({ email, password }),
-  })
+    })
 
     const loginData = await loginResp.json()
     console.log(`***********************  RESPUESTA DEL ENDPOINT : API/LOGIN`)
     console.log("LOGINDATA: ", loginData)
 
-    if(loginData.error) {
+    if (loginData.error) {
       throw new Error(loginData.error)
     }
     const decodeToken = jwtDecode<JwtPayload>(loginData.token)
@@ -52,52 +53,52 @@ export async function POST(request: NextRequest) {
     cookies().set('token', loginData.token, { expires: new Date(new Date().getTime() + 600000) })
     cookies().set('userid', decodeToken.username, { expires: new Date(new Date().getTime() + 600000) })
 
-//************************************************************************************* */
+    //************************************************************************************* */
 
     const userResp = await fetch(`https://digitalmoney.digitalhouse.com/api/users/${decodeToken.username}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
         "Authorization": loginData.token
-        },
-    })      
-    
-    const userData : UserDataTypes = await userResp.json()
+      },
+    })
+
+    const userData: UserDataTypes = await userResp.json()
     console.log(`***********************  RESPUESTA DEL ENDPOINT : API/USERS/${decodeToken.username}`)
     console.log("USER DATA", userData)
-    
+
     cookies().set(
       'username',
-       JSON.stringify(`${userData.firstname} ${userData.lastname}`), 
-       { expires: new Date(new Date().getTime() + 600000) }
-      )
-    
-    if(userData.error) {
-      throw new Error(loginData.error)
-      }
-     
-//************************************************************************************* */
+      JSON.stringify(`${userData.firstname} ${userData.lastname}`),
+      { expires: new Date(new Date().getTime() + 600000) }
+    )
+
+    if (userData.error) {
+      throw new Error(userData.error)
+    }
+
+    //************************************************************************************* */
     const accountResp = await fetch(`https://digitalmoney.digitalhouse.com/api/account`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
         "Authorization": loginData.token
-        },
-    })      
+      },
+    })
 
-    const accountData : AccountDataTypes = await accountResp.json()
+    const accountData: AccountDataTypes = await accountResp.json()
     console.log(`***********************  RESPUESTA DEL ENDPOINT : API/ACCOUNT`)
     console.log("ACCOUNT DATA", accountData)
-    
+
     cookies().set(
-      'accountid', 
-      JSON.stringify(accountData.id), 
+      'accountid',
+      JSON.stringify(accountData.id),
       { expires: new Date(new Date().getTime() + 600000) }
     )
 
-    if(userData.error) {
-      throw new Error(loginData.error)
-      }   
+    if (accountData.error) {
+      throw new Error(accountData.error)
+    }
 
     return new NextResponse(JSON.stringify({}), {
       status: 200,

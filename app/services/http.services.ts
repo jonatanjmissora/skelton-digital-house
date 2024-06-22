@@ -1,4 +1,5 @@
 export const httpGet = async (endpoint: string, token: string) => {
+    console.log("HTTP GET ", { endpoint, token })
     const res = await fetch(`http://localhost:3000/${endpoint}`, {
         method: "GET",
         headers: {
@@ -38,9 +39,9 @@ export const httpDelete = async (endpoint: string, token: string) => {
     const res = await fetch(`http://localhost:3000/${endpoint}`, {
         method: 'DELETE',
         headers: {
-                'Content-Type': 'application/json',
-                "Authorization": token
-            },
+            'Content-Type': 'application/json',
+            "Authorization": token
+        },
     });
     if (!res.ok) {
         console.log(`${res.status} - ${res.statusText}`)

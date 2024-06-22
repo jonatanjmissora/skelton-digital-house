@@ -1,8 +1,6 @@
 import { AccountDataTypes } from "@/app/api/accounts/route";
-import { UserDataTypes } from "@/app/api/user/route";
 import { getAccountData } from "@/app/services/account.services";
-import { getUserData } from "@/app/services/user.services"
-import { cookies, headers } from "next/headers"
+import { cookies } from "next/headers"
 import Link from "next/link";
 
 export default async function Dashboard() {
