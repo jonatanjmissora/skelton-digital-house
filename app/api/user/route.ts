@@ -1,5 +1,12 @@
+import { jwtDecode } from "jwt-decode";
 import { cookies, headers } from "next/headers"
 import { NextRequest, NextResponse } from "next/server";
+
+export type DecodeTokenTypes = {
+  username: string;
+  email: string;
+  exp: number;
+}
 
 export type UserDataTypes = {
   id: number;
@@ -12,9 +19,11 @@ export type UserDataTypes = {
 }
 
 export async function GET() {
-  const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IjQwIiwiZW1haWwiOiJqb25hdGFuam1pc3NvcmFAZ21haWwuY29tIiwiZXhwIjoxNzE5MDYzODMzfQ.fCl7ffg_voZIKXzgFJ9GDbR9uCLosHde3nIEiQ_2rOE'
+  const token = headers().get("authorization") ?? ""
+  const decodeToken = jwtDecode<DecodeTokenTypes>(token)
+  const userId = decodeToken.username
   try {
-    const userResp = await fetch(`https://digitalmoney.digitalhouse.com/api/users/40`, {
+    const userResp = await fetch(`https://digitalmoney.digitalhouse.com/api/users/${userId}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -40,6 +49,8 @@ export async function GET() {
       status: 200,
     })
   } catch (e) {
+    if (e instanceof Error)
+      console.log("ERROR", e.message)
     return new NextResponse(JSON.stringify({
       error: 'Internal server error'
     }), {
@@ -63,16 +74,16 @@ export async function GET() {
     })
 */
 
-/*
+
 export async function PATCH(request: NextRequest) {
   try {
 
     const token = cookies().get('token')?.value ?? ''
-    //const userId = cookies().get('userid')?.value ?? ''
-
     const { userId, newUser } = await request.json();
-
-    if (!token || !userId) return
+    console.log({ token, userId, newUser })
+    if (!token || !userId) return new NextResponse(JSON.stringify({ error: "No toke, ni userId" }), {
+      status: 400,
+    })
 
     const userEditResp = await fetch(`https://digitalmoney.digitalhouse.com/api/users/${userId}`, {
       method: 'PATCH',
@@ -84,7 +95,6 @@ export async function PATCH(request: NextRequest) {
     })
 
     const userEditData: UserDataTypes = await userEditResp.json()
-    //const username = `${userEditData.firstname} ${userEditData.lastname}`
 
     console.log(`***********************  RESPUESTA DEL ENDPOINT : API/USERS/${userId}`)
     console.log(userEditData)
@@ -93,6 +103,8 @@ export async function PATCH(request: NextRequest) {
       status: 200,
     })
   } catch (e) {
+    if (e instanceof Error)
+      console.log("ERROR", e.message)
     return new NextResponse(JSON.stringify({
       error: 'Internal server error'
     }), {
@@ -100,4 +112,3 @@ export async function PATCH(request: NextRequest) {
     })
   }
 }
-  */

@@ -1,5 +1,5 @@
 import DeleteCardForm from '@/app/components/DeleteCardForm';
-import { AccountCardsDataTypes, getAccountCardData, getAccountCardsData } from '@/app/services/account.services';
+import { AccountCardsDataTypes, getAccountCardData } from '@/app/services/card.services';
 import { cookies } from 'next/headers';
 
 export default async function AccountCard({ params }: { params: { cardId: string } }) {

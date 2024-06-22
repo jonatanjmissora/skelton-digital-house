@@ -13,6 +13,8 @@ export async function POST(request: NextRequest) {
       status: 200,
     })
   } catch (e) {
+    if (e instanceof Error)
+      console.log("ERROR", e.message)
     return new Response(JSON.stringify({
       error: 'Internal server error'
     }), {

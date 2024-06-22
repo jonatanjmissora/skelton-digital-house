@@ -1,4 +1,4 @@
-import { AccountCardsDataTypes, getAccountCardsData } from '@/app/services/account.services';
+import { AccountCardsDataTypes, getAccountCardsData } from '@/app/services/card.services';
 import { cookies } from 'next/headers';
 import Link from 'next/link'
 import React from 'react'
@@ -7,8 +7,8 @@ export default async function CardsPage() {
 
   const token = cookies().get('token')?.value ?? '';
   const accountId = cookies().get('accountid')?.value ?? '';
-  const  accountCardsData: AccountCardsDataTypes[] = await getAccountCardsData(accountId, token)
-  
+  const accountCardsData: AccountCardsDataTypes[] = await getAccountCardsData(accountId, token)
+
   return (
     <>
       <div className="w-full flex flex-col p-8 border border-gray-500">

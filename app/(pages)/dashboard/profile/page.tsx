@@ -24,7 +24,7 @@ export default async function ProfilePage() {
       <div className="w-full flex justify-between p-8 border border-gray-500"><Link href={`/dashboard/accounts/${accountData.id}/cards`}>Medios de pago</Link></div>
       <div className="w-full flex justify-between p-8 border border-gray-500">
         <span>CVU : {accountData.cvu}</span>
-        <span>Alias : {accountData.alias}</span>
+        <Link href={`/dashboard/accounts/${accountData.id}`}>Alias : {accountData.alias}</Link>
       </div>
     </>
   )

@@ -1,5 +1,4 @@
 export const httpGet = async (endpoint: string, token: string) => {
-    console.log("HTTP GET ", { endpoint, token })
     const res = await fetch(`http://localhost:3000/${endpoint}`, {
         method: "GET",
         headers: {
@@ -15,7 +14,7 @@ export const httpGet = async (endpoint: string, token: string) => {
     return res.json();
 }
 
-export const httpPost = async (endpoint: string, data?: object, token?: string) => {
+export const httpPost = async (endpoint: string, data?: object | null, token?: string) => {
     const res = await fetch(`http://localhost:3000/${endpoint}`, {
         method: 'POST',
         headers: !token
@@ -35,7 +34,7 @@ export const httpPost = async (endpoint: string, data?: object, token?: string) 
 }
 
 export const httpDelete = async (endpoint: string, token: string) => {
-    console.log(" ************************ ************** ************EN SERVICES")
+    console.log(" ************************ ************** ************EN SERVICES", { endpoint, token })
     const res = await fetch(`http://localhost:3000/${endpoint}`, {
         method: 'DELETE',
         headers: {
@@ -46,6 +45,23 @@ export const httpDelete = async (endpoint: string, token: string) => {
     if (!res.ok) {
         console.log(`${res.status} - ${res.statusText}`)
         throw new Error("Failed to delete: " + endpoint)
+    }
+
+    return res.json();
+}
+
+export const httpPatch = async (endpoint: string, token: string, dataObj?: object) => {
+    const res = await fetch(`http://localhost:3000/${endpoint}`, {
+        method: 'PATCH',
+        headers: {
+            'Content-Type': 'application/json',
+            "Authorization": token
+        },
+        body: JSON.stringify(dataObj)
+    });
+    if (!res.ok) {
+        console.log(`${res.status} - ${res.statusText}`)
+        throw new Error("Failed to patch: " + endpoint)
     }
 
     return res.json();
