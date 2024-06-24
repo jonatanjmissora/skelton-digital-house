@@ -29,7 +29,7 @@ export async function GET() {
     cookies().set(
       'accountid',
       JSON.stringify(accountData.id),
-      { expires: new Date(new Date().getTime() + 600000) }
+      { expires: new Date(new Date().getTime() + 36000000) }
     )
 
     return new NextResponse(JSON.stringify(accountData), {

@@ -1,6 +1,6 @@
-import { AccountDataTypes } from '@/app/api/accounts/route'
-import { UserDataTypes } from '@/app/api/user/route';
-import { getAccountData } from '@/app/services/account.services'
+import { AccountDataTypes } from '@/app/api/accounts/RRRroute'
+import { UserDataTypes } from '@/app/api/user/RRRroute';
+import { getAccountData } from '@/app/services/account.services';
 import { getUserData } from '@/app/services/user.services';
 import { cookies } from 'next/headers';
 import Link from 'next/link';
@@ -9,8 +9,11 @@ import React from 'react'
 export default async function ProfilePage() {
 
   const token = cookies().get('token')?.value ?? '';
-  const accountData: AccountDataTypes = await getAccountData(token)
-  const userData: UserDataTypes = await getUserData(token)
+  const userId = cookies().get('userid')?.value ?? '';
+  const accountDataPromise: Promise<AccountDataTypes> = await getAccountData(token)
+  const userDataPromise: Promise<UserDataTypes> = await getUserData(userId, token)
+  const [accountData, userData] = await Promise.all([accountDataPromise, userDataPromise])
+  if(!accountData || !userData) return <>No hay datos</>
 
   return (
     <>

@@ -1,4 +1,5 @@
-import { AccountCardsDataTypes, getAccountCardsData } from '@/app/services/card.services';
+import { getCardsData } from '@/app/services/card.services';
+import { CardsDataTypes } from '@/app/types/card.types';
 import { cookies } from 'next/headers';
 import Link from 'next/link'
 import React from 'react'
@@ -7,7 +8,7 @@ export default async function CardsPage() {
 
   const token = cookies().get('token')?.value ?? '';
   const accountId = cookies().get('accountid')?.value ?? '';
-  const accountCardsData: AccountCardsDataTypes[] = await getAccountCardsData(accountId, token)
+  const cardsData: CardsDataTypes[] = await getCardsData(accountId, token)
 
   return (
     <>
@@ -16,10 +17,9 @@ export default async function CardsPage() {
       </div>
 
       <div className="w-full flex flex-col p-8 border border-gray-500">
-        <span>Tus tarjetas</span>
-      </div>
-      <div className="w-full flex flex-col p-8 border border-gray-500">
-        {accountCardsData.map(card => <CardRow key={card.id} card={card} />)}
+        <span className='mb-4'>Tus tarjetas</span>
+        {cardsData && cardsData.map(card => <CardRow key={card.id} card={card} />)}
+        {!cardsData && <>No hay targetas cargadas</>}
       </div>
 
     </>
@@ -29,10 +29,10 @@ export default async function CardsPage() {
 
 const getLast4 = (num: number) => {
   const numberStr = num.toString()
-  return parseInt(numberStr.substr(-4), 10);
+  return numberStr.substr(-4);
 }
 
-const CardRow = async ({ card }: { card: AccountCardsDataTypes }) => {
+const CardRow = async ({ card }: { card: CardsDataTypes }) => {
 
   return (
     <div className='flex justify-between'>

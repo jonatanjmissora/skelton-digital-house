@@ -2,10 +2,14 @@
 
 import React from 'react'
 import { editUser } from '../services/user.services'
-import { AccountDataTypes } from '../api/accounts/route'
-import { editAccountAlias } from '../services/account.services'
+import { AccountDataTypes } from '../api/accounts/RRRroute'
+import { useRouter } from 'next/navigation'
+import { editAlias } from '../services/account.services'
+import Link from 'next/link'
 
 export default function AccountEditForm({ accountData, token }: { accountData: AccountDataTypes, token: string }) {
+
+  const router = useRouter()
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
@@ -14,7 +18,10 @@ export default function AccountEditForm({ accountData, token }: { accountData: A
       alias: event.currentTarget.alias.value
     }
 
-    const accountEditResp = await editAccountAlias(accountData.id.toString(), accountAlias, token)
+    const aliasEditResp = await editAlias(accountData.id.toString(), accountAlias, token)
+    console.log("Alias editado", {aliasEditResp})
+    router.push(`/dashboard/profile`)
+    router.refresh();
   }
 
   return (
@@ -23,7 +30,6 @@ export default function AccountEditForm({ accountData, token }: { accountData: A
         CVU: {accountData.cvu}
       </span>
 
-      <div className='flex gap-4'>
         <input
           type="text"
           name="alias"
@@ -31,8 +37,10 @@ export default function AccountEditForm({ accountData, token }: { accountData: A
           defaultValue={accountData.alias}
           className='border border-gray-500 p-2 text-center w-max'
         />
-        <button type="submit" className='btn w-max'>Editar</button>
-      </div>
+        <div className='flex gap-4 mt-4'>
+          <button type="submit" className='btn w-max'>Editar</button>
+          <Link href={`/dashboard/profile`} className='btn'>Cancelar</Link>
+        </div>
 
     </form>
   )

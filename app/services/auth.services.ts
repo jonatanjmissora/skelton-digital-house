@@ -1,4 +1,4 @@
-import { httpGet, httpPost } from "./http.services";
+import { httpPost } from "./http.services";
 
 type LoginTypes = {
   email: string;
@@ -10,16 +10,5 @@ export const logout = async () => {
 }
 
 export const login = async ({ email, password }: LoginTypes) => {
-
-  const loginRes = await httpPost("api/auth/login", { email, password })
-
-  if (loginRes.token) {
-
-    const userPromise = await httpGet("api/user", loginRes.token)
-    const accountPromise = await httpGet("api/accounts", loginRes.token)
-
-    await Promise.all([userPromise, accountPromise])
-
-  }
-
+  return httpPost("api/auth/login", { email, password })
 }

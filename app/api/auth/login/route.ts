@@ -1,7 +1,12 @@
 import { jwtDecode } from "jwt-decode";
 import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
-import { DecodeTokenTypes } from "../../user/route";
+import { DecodeTokenTypes } from "../../user/RRRroute";
+import { getData } from "@/app/services/direct.services";
+import { getUserData } from "@/app/services/user.services";
+import { getAccountData } from "@/app/services/account.services";
+
+const cookieOptions = { expires: new Date(new Date().getTime() + 36000000) }
 
 export async function POST(request: NextRequest) {
 
@@ -17,29 +22,41 @@ export async function POST(request: NextRequest) {
     })
 
     const loginData = await loginResp.json()
-    console.log(`***********************  RESPUESTA DEL ENDPOINT : API/LOGIN`)
-    console.log("LOGINDATA: ", loginData)
-
     if (loginData.error) {
       throw new Error(loginData.error)
     }
-    const decodeToken = jwtDecode<DecodeTokenTypes>(loginData.token)
+    const {token} = loginData
+    const {username : userId }= jwtDecode<DecodeTokenTypes>(token)
 
-    cookies().set('token', loginData.token, { expires: new Date(new Date().getTime() + 600000) })
-    cookies().set('userid', decodeToken.username, { expires: new Date(new Date().getTime() + 600000) })
+    const userDataPromise = await getUserData(userId, token,)
+    const accountDataPromise = await getAccountData(token)
+    const [userData, accountData] = await Promise.all([userDataPromise, accountDataPromise])
 
+    const userName = `${userData.firstname} ${userData.lastname}`
+    const accountId = accountData.id.toString()
+
+    cookies().set('token', token, cookieOptions)
+    cookies().set('userid', userId, cookieOptions)
+    cookies().set('username', userName, cookieOptions)
+    cookies().set('accountid', accountId, cookieOptions)
+
+    console.log("--------------------------------- LOGIN RESPONSE -------------------------------")
+    console.log("token :", token !== "")
+    console.log({userId, userName, accountId})
 
     return new NextResponse(JSON.stringify(loginData), {
       status: 200,
     })
+
   } catch (e) {
-    if (e instanceof Error)
-      console.log("ERROR", e.message)
+    if (e instanceof Error) {
+      console.log("-------------------------------- ROUTE api/login ERROR : ", e.message)
     return new NextResponse(JSON.stringify({
-      error: 'Internal server error'
+      error: e.message
     }), {
       status: 500,
     })
+  }
   }
 }
 

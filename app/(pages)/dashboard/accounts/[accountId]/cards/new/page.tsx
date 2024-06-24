@@ -11,9 +11,6 @@ export default function NewCardPage() {
     <>
         <div className="w-full flex flex-col p-8 border border-gray-500">
             Nueva Tarjeta
-        </div>
-
-        <div className="w-full flex flex-col p-8 border border-gray-500"> 
             <NewCardForm accountId={accountId} token={token}/>
         </div>
     </>

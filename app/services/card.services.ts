@@ -1,34 +1,17 @@
-import { httpDelete, httpGet, httpPost } from "./http.services"
+import { deleteData, getData, postData } from "./direct.services"
 
-export type AccountCardsDataTypes = {
-  id: number;
-  account_id: number;
-  number_id: number;
-  first_last_name: string;
-  cod: number;
-  expiration_date: string;
-  error?: string
+export const getCardsData = async (accountId: string, token: string) => {
+  return getData(`api/accounts/${accountId}/cards`, token)
 }
 
-export type NewCardTypes = {
-  cod: number;
-  expiration_date: string;
-  first_last_name: string;
-  number_id: number;
-}
-
-export const getAccountCardData = async (cardId: string, accountId: string, token: string) => {
-  return await httpGet(`/api/accounts/${accountId}/cards/${cardId}`, token)
-}
-
-export const getAccountCardsData = async (accountId: string, token: string) => {
-  return await httpGet(`/api/accounts/${accountId}/cards`, token)
-}
-
-export const postNewCard = async (accountId: string, newCard: NewCardTypes, token: string) => {
-  return await httpPost(`/api/accounts/${accountId}/cards`, newCard, token)
+export const getCardData = async (cardId: string, accountId: string, token: string) => {
+  return getData(`api/accounts/${accountId}/cards/${cardId}`, token)
 }
 
 export const deleteCard = async (cardId: string, accountId: string, token: string) => {
-  return await httpDelete(`/api/accounts/${accountId}/cards/${cardId}`, token)
+  return deleteData(`api/accounts/${accountId}/cards/${cardId}`, token)
+}
+
+export const postCard = async (accountId: string, newCard: object, token: string) => {
+  return postData(`api/accounts/${accountId}/cards`, newCard, token)
 }

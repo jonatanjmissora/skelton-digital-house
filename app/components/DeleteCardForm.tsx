@@ -1,8 +1,8 @@
 "use client"
 
 import Link from "next/link";
-import { deleteCard } from "../services/card.services";
 import { useRouter } from "next/navigation";
+import { deleteCard } from "../services/card.services";
 
 type DeleteCardFormTypes = {
     actualCardId: string;

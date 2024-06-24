@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import React from 'react'
-import { postNewCard } from '../services/card.services';
+import { postCard } from '../services/card.services';
 
 function randomNumber() {
     return Math.random() * (9999999999999999 - 1000000000000000) + 1000000000000000;
@@ -22,8 +22,8 @@ export default function NewCardForm({ accountId, token }: { accountId: string, t
             number_id: parseInt(cardNumber, 10),
         }
 
-        await postNewCard(accountId, newCard, token)
-        console.log("Nueva tarjeta creada")
+        const newCardResp = await postCard(accountId, newCard, token)
+        console.log("Nueva tarjeta creada", newCardResp)
         router.push(`/dashboard/accounts/${accountId}/cards`)
         router.refresh();
 
@@ -31,11 +31,15 @@ export default function NewCardForm({ accountId, token }: { accountId: string, t
 
     return (
 
-        <form className='flex gap-4 items-center' onSubmit={handleSubmit}>
-            <label htmlFor="cardNumber">Numero de tarjeta</label>
-            <input className='border border-gray-500 p-2 text-center' type="text" value={randomNumber()} readOnly name="randomCard" />
-            <button type='submit' className='btn'>Agregar tarjeta</button>
-            <Link href={`/dashboard/accounts/${accountId}/cards`} className='btn'>Cancelar</Link>
+        <form className='flex flex-col gap-2' onSubmit={handleSubmit}>
+            <div className='flex gap-2 items-center my-4'>
+                <label htmlFor="cardNumber">Numero de tarjeta</label>
+                <input className='border border-gray-500 p-2 text-center' type="text" value={randomNumber()} readOnly name="randomCard" />
+            </div>
+            <div className='flex gap-4'>
+                <button type='submit' className='btn'>Agregar tarjeta</button>
+                <Link href={`/dashboard/accounts/${accountId}/cards`} className='btn'>Cancelar</Link>
+            </div>
         </form>
 
     )

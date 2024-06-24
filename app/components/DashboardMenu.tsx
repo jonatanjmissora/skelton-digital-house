@@ -20,7 +20,7 @@ export default function DashboardMenu({ accountId }: { accountId: string }) {
         <Link href="/dashboard">Inicio</Link>
         <Link href={`/dashboard/accounts/${accountId}/activity`}>Actividad</Link>
         <Link href="/dashboard/profile">Tu perfil</Link>
-        <Link href="/dashboard/transfer">Cargar dinero</Link>
+        <Link href={`/dashboard/accounts/${accountId}/deposit`}>Cargar dinero</Link>
         <Link href="/dashboard/services">Pagar servicios</Link>
         <Link href={`/dashboard/accounts/${accountId}/cards`}>Tarjetas</Link>
         <button onClick={handleClick}>Cerrar sesion</button>

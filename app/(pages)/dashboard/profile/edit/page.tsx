@@ -7,7 +7,7 @@ export default async function ProfileEdit() {
 
   const token = cookies().get('token')?.value ?? '';
   const userId = cookies().get('userid')?.value ?? '';
-  const userData = await getUserData(token)
+  const userData = await getUserData(userId, token)
 
   return (
     <>

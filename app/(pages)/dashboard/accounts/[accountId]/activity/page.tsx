@@ -8,7 +8,6 @@ export default async function ActivityPage() {
   const token = cookies().get('token')?.value ?? '';
   const accountId = cookies().get('accountid')?.value ?? '';
   const activityData: ActivityDataTypes[] = await getActivityData(accountId, token)
-  console.log(activityData)
 
   return (
     <>

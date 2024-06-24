@@ -1,5 +1,6 @@
-import { AccountDataTypes } from "@/app/api/accounts/route";
-import { ActivityDataTypes, getAccountData, getActivityData } from "@/app/services/account.services";
+import { AccountDataTypes } from "@/app/api/accounts/RRRroute";
+import { getAccountData, getActivityData } from "@/app/services/account.services";
+import { ActivityDataTypes } from "@/app/types/account.types";
 import { cookies } from "next/headers"
 import Link from "next/link";
 
@@ -8,10 +9,11 @@ export default async function Dashboard() {
   const token = cookies().get('token')?.value ?? '';
   const accountId = cookies().get('accountid')?.value ?? '';
 
-  const accountDataPromise = await getAccountData(token)
-  const activityDataPromise = await getActivityData(accountId, token)
+  const accountDataPromise: Promise<AccountDataTypes> = await getAccountData(token)
+  const activityDataPromise: Promise<ActivityDataTypes[]> = await getActivityData(accountId, token)
 
-  const [accountData, activityData]: [accountData: AccountDataTypes, activityData: ActivityDataTypes[]] = await Promise.all([accountDataPromise, activityDataPromise])
+  const [accountData, activityData] = await Promise.all([accountDataPromise, activityDataPromise])
+  if(!accountData || !activityData) return <>No hay datos</>
 
   return (
     <>
@@ -22,7 +24,7 @@ export default async function Dashboard() {
       </div>
 
       <div className="w-full flex justify-between p-8 border border-gray-500">
-        <Link href="/dashboard/transaction">Transferir dinero</Link>
+        <Link href={`/dashboard/accounts/${accountId}/transferences`}>Transferir dinero</Link>
         <Link href="/dashboard/services">Pagar servicios</Link>
       </div>
 

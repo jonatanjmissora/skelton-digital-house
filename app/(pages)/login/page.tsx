@@ -13,16 +13,13 @@ export default function Login() {
     const email = event.currentTarget.email.value;
     const password = event.currentTarget.password.value;
     setServerError(null)
-    try {
-      await login({ email, password })
-      console.log("Recibi los datos del swagger")
-      router.push("/dashboard")
-      router.refresh();
-    }
-    catch (e) {
-      if (e instanceof Error)
-        setServerError(e.message)
-    }
+      const resp = await login({ email, password })
+      console.log("Recibi respuesta del swagger")
+      if(resp.token) {
+        router.push("/dashboard")
+        router.refresh();
+      }
+      else setServerError(resp.error)
   }
 
   return (

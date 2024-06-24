@@ -1,5 +1,6 @@
 import DeleteCardForm from '@/app/components/DeleteCardForm';
-import { AccountCardsDataTypes, getAccountCardData } from '@/app/services/card.services';
+import { getCardData } from '@/app/services/card.services';
+import { CardsDataTypes } from '@/app/types/card.types';
 import { cookies } from 'next/headers';
 
 export default async function AccountCard({ params }: { params: { cardId: string } }) {
@@ -7,7 +8,7 @@ export default async function AccountCard({ params }: { params: { cardId: string
   const { cardId } = params
   const token = cookies().get('token')?.value ?? '';
   const accountId = cookies().get('accountid')?.value ?? '';
-  const actualCard: AccountCardsDataTypes = await getAccountCardData(cardId, accountId, token)
+  const actualCard: CardsDataTypes = await getCardData(cardId, accountId, token)
 
   return (
     <>

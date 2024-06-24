@@ -38,7 +38,7 @@ export async function GET() {
     cookies().set(
       'username',
       JSON.stringify(`${userData.firstname} ${userData.lastname}`),
-      { expires: new Date(new Date().getTime() + 600000) }
+      { expires: new Date(new Date().getTime() + 36000000) }
     )
 
     if (userData.error) {
