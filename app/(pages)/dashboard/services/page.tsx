@@ -1,20 +1,30 @@
 import { getServicesData } from "@/app/services/services.services"
+import { ServiceTypes } from "@/app/types/service.types"
+import Link from "next/link"
 
 export default async function ServicesPage() {
 
-  const servicesData = await getServicesData()
-  console.log(servicesData)
+  const servicesData: ServiceTypes[] = await getServicesData()
 
   return (
-    <div className="w-full flex flex-col p-8 border border-gray-500">
-      <div>Servicios</div>
-      {servicesData.map(service => <ServiceRow key={service.key} service={service}/>)}
-    </div>
+    <>
+      <div className="w-full flex flex-col p-8 border border-gray-500">
+        <input className="p-2" type="text" placeholder="Buscá entre más de 5.000 empresas" />
+      </div>
+
+      <div className="w-full flex flex-col p-8 border border-gray-500">
+        <div className="mb-4">Servicios</div>
+        {servicesData.map(service => <ServiceRow key={service.id} service={service} />)}
+      </div>
+    </>
   )
 }
 
-const ServiceRow = ({service}) => {
+const ServiceRow = ({ service }: { service: ServiceTypes }) => {
   return (
-    <div>{JSON.stringify(service, null, 2)}</div>
+    <div className="w-full flex justify-between py-1 hover:bg-white">
+      <span>{service.name}</span>
+      <Link href={`/dashboard/services/${service.id}`}>Seleccionar</Link>
+    </div>
   )
 }

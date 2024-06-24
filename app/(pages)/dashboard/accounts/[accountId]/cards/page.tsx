@@ -35,7 +35,7 @@ const getLast4 = (num: number) => {
 const CardRow = async ({ card }: { card: CardsDataTypes }) => {
 
   return (
-    <div className='flex justify-between'>
+    <div className='flex justify-between items-center hover:bg-white'>
       <span>terminada en {getLast4(card.number_id)}</span>
       <span>id: {card.id}</span>
       <Link href={`/dashboard/accounts/${card.account_id}/cards/${card.id}`} className='btn'>eliminar</Link>

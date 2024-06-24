@@ -1,24 +1,25 @@
 const SWAGGER = "https://digitalmoney.digitalhouse.com/"
 
-export const getData = async (endpoint: string, token?: string) => {
+export const getData = async (endpoint: string, token?: string, userId?: string) => {
     try {
         const res = await fetch(`${SWAGGER}${endpoint}`, {
             method: "GET",
-            headers: !token 
-            ?{'Content-Type': 'application/json'}
-            : {
-                'Content-Type': 'application/json',
-                "Authorization": token,
-            },
+            headers: !token
+                ? { 'Content-Type': 'application/json' }
+                : {
+                    'Content-Type': 'application/json',
+                    "Authorization": token,
+                    "Id": userId ?? "",
+                },
         })
         if (!res.ok) {
             console.log(`${res.status} - ${res.statusText}`)
             throw new Error("Failed to get: /api/accounts")
         }
-        
+
         return res.json();
     } catch (error) {
-        if(error instanceof Error) 
+        if (error instanceof Error)
             console.log("ERROR", error.message)
     }
 
@@ -46,7 +47,7 @@ export const postData = async (endpoint: string, dataObj?: object | null, token?
 
         return response;
     } catch (error) {
-        if(error instanceof Error) 
+        if (error instanceof Error)
             console.log("ERROR", error.message)
     }
 }
@@ -71,7 +72,7 @@ export const deleteData = async (endpoint: string, token: string) => {
         return res.json()
 
     } catch (error) {
-        if(error instanceof Error) 
+        if (error instanceof Error)
             console.log("ERROR", error.message)
     }
 }
@@ -98,7 +99,7 @@ export const patchData = async (endpoint: string, dataObj?: object | null, token
 
         return response;
     } catch (error) {
-        if(error instanceof Error) 
+        if (error instanceof Error)
             console.log("ERROR", error.message)
     }
 }
