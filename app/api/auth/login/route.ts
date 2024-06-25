@@ -6,7 +6,7 @@ import { getData } from "@/app/services/direct.services";
 import { getUserData } from "@/app/services/user.services";
 import { getAccountData } from "@/app/services/account.services";
 
-const cookieOptions = { expires: new Date(new Date().getTime() + 36000000) }
+const cookieOptions = { expires: new Date(new Date().getTime() + 3600000) }
 
 export async function POST(request: NextRequest) {
 
@@ -25,8 +25,8 @@ export async function POST(request: NextRequest) {
     if (loginData.error) {
       throw new Error(loginData.error)
     }
-    const {token} = loginData
-    const {username : userId }= jwtDecode<DecodeTokenTypes>(token)
+    const { token } = loginData
+    const { username: userId } = jwtDecode<DecodeTokenTypes>(token)
 
     const userDataPromise = await getUserData(userId, token,)
     const accountDataPromise = await getAccountData(token)
@@ -42,7 +42,7 @@ export async function POST(request: NextRequest) {
 
     console.log("--------------------------------- LOGIN RESPONSE -------------------------------")
     console.log("token :", token !== "")
-    console.log({userId, userName, accountId})
+    console.log({ userId, userName, accountId })
 
     return new NextResponse(JSON.stringify(loginData), {
       status: 200,
@@ -51,12 +51,12 @@ export async function POST(request: NextRequest) {
   } catch (e) {
     if (e instanceof Error) {
       console.log("-------------------------------- ROUTE api/login ERROR : ", e.message)
-    return new NextResponse(JSON.stringify({
-      error: e.message
-    }), {
-      status: 500,
-    })
-  }
+      return new NextResponse(JSON.stringify({
+        error: e.message
+      }), {
+        status: 500,
+      })
+    }
   }
 }
 
