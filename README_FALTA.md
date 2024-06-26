@@ -1,6 +1,6 @@
 falta agregar tarjetas
 
-falta filtro de actividades
+falta paginacion de actividades
 
 falta detalle de actividad
 

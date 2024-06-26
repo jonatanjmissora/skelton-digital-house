@@ -35,7 +35,7 @@ export default async function Dashboard() {
             )
           }
         </div>
-        <Link href={`/dashboard/accounts/${accountId}/activity`}>Ver +</Link>
+        <Link href={`/dashboard/accounts/${accountId}/activity?page=1`}>Ver +</Link>
       </div>
     </>
 

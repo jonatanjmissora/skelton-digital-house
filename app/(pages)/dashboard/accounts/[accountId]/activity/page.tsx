@@ -1,43 +1,34 @@
 import ActivityFilter from '@/app/components/ActivityFilter';
+import ActivityPagination from '@/app/components/ActivityPagination';
+import ActivitySearch from '@/app/components/ActivitySearch';
 import { getActivityData } from '@/app/services/account.services';
 import { ActivityDataTypes } from '@/app/types/account.types';
+import { getActualActivities } from '@/app/utils/getActualActivities';
 import { cookies } from 'next/headers';
 import React from 'react'
 
-const getFiltered = (activityData: ActivityDataTypes[], qry: string) => {
-  const [day, month, year] = new Date().toLocaleDateString().split("/");
-  const correctMonth = month.length < 2 ? "0" + month : month
-  const correctDay = day.length < 2 ? "0" + day : day
-  const today = `${year}-${correctMonth}-${correctDay}`
-  if (qry === "hoy") {
-    return activityData.filter(activity => activity.dated.substring(0, 10) === today)
-  }
-  if (qry === "mes") {
-    return activityData.filter(activity => activity.dated.substring(5, 7) === correctMonth &&
-      activity.dated.substring(0, 4) === year)
-  }
-  if (qry === "anio") {
-    return activityData.filter(activity => activity.dated.substring(0, 4) === year)
-  }
-  if (!qry) {
-    return activityData
-  }
+export type ParamsType = {
+    filter?: string;
+    search?: string;
+    page: string;
 }
 
-export default async function ActivityPage({ searchParams }: { searchParams: { qry: string } }) {
-
-  const { qry } = searchParams
+export default async function ActivityPage({ searchParams }: {searchParams: ParamsType}) {
+  const search = searchParams.search
+  const filter = searchParams.filter
+  const page = searchParams.page
 
   const token = cookies().get('token')?.value ?? '';
   const accountId = cookies().get('accountid')?.value ?? '';
   const activityData: ActivityDataTypes[] = await getActivityData(accountId, token)
-  const filteredActivities = getFiltered(activityData, qry) ?? []
+  
+  const filteredActivities = getActualActivities(activityData, page, filter, search  )
 
   return (
     <>
       <div className="w-full flex justify-between p-8 border border-gray-500">
-        <input className='p-2' type="text" placeholder='Busca en tu actividad' />
-        <ActivityFilter accountId={accountId} />
+        <ActivitySearch />
+        <ActivityFilter />
       </div>
       <div className="w-full flex flex-col p-8 border border-gray-500">
         <h2>Actividad</h2>
@@ -49,7 +40,7 @@ export default async function ActivityPage({ searchParams }: { searchParams: { q
             )
           }
         </div>
-        <div className='w-full text-center'>1 2 3 4 5</div>
+        <ActivityPagination activityLength={filteredActivities.length} />
       </div>
     </>
   )
