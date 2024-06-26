@@ -1,10 +1,10 @@
 "use client"
 
 import React from 'react'
-import { editUser } from '../services/user.services'
-import { AccountDataTypes } from '../api/accounts/RRRroute'
+import { editUser } from '../../services/user.services'
+import { AccountDataTypes } from '../../api/accounts/RRRroute'
 import { useRouter } from 'next/navigation'
-import { editAlias } from '../services/account.services'
+import { editAlias } from '../../services/account.services'
 import Link from 'next/link'
 
 export default function AccountEditForm({ accountData, token }: { accountData: AccountDataTypes, token: string }) {
@@ -19,7 +19,7 @@ export default function AccountEditForm({ accountData, token }: { accountData: A
     }
 
     const aliasEditResp = await editAlias(accountData.id.toString(), accountAlias, token)
-    console.log("Alias editado", {aliasEditResp})
+    console.log("Alias editado", { aliasEditResp })
     router.push(`/dashboard/profile`)
     router.refresh();
   }
@@ -30,17 +30,17 @@ export default function AccountEditForm({ accountData, token }: { accountData: A
         CVU: {accountData.cvu}
       </span>
 
-        <input
-          type="text"
-          name="alias"
-          required
-          defaultValue={accountData.alias}
-          className='border border-gray-500 p-2 text-center w-max'
-        />
-        <div className='flex gap-4 mt-4'>
-          <button type="submit" className='btn w-max'>Editar</button>
-          <Link href={`/dashboard/profile`} className='btn'>Cancelar</Link>
-        </div>
+      <input
+        type="text"
+        name="alias"
+        required
+        defaultValue={accountData.alias}
+        className='border border-gray-500 p-2 text-center w-max'
+      />
+      <div className='flex gap-4 mt-4'>
+        <button type="submit" className='btn w-max'>Editar</button>
+        <Link href={`/dashboard/profile`} className='btn'>Cancelar</Link>
+      </div>
 
     </form>
   )

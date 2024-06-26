@@ -2,15 +2,15 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { deleteCard } from "../services/card.services";
+import { deleteCard } from "../../services/card.services";
 
-type DeleteCardFormTypes = {
+type CardDeleteFormTypes = {
     actualCardId: string;
     accountId: string;
     token: string;
 }
 
-export default function DeleteCardForm({ actualCardId, accountId, token }: DeleteCardFormTypes) {
+export default function CardDeleteForm({ actualCardId, accountId, token }: CardDeleteFormTypes) {
 
     const router = useRouter()
 

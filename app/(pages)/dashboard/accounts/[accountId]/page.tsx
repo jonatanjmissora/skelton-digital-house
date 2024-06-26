@@ -1,4 +1,4 @@
-import AccountEditForm from '@/app/components/AccountEditForm';
+import AccountEditForm from '@/app/components/Account/AccountEditForm';
 import { getAccountData } from '@/app/services/account.services';
 import { cookies } from 'next/headers';
 import React from 'react'

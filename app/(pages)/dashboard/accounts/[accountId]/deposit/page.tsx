@@ -1,4 +1,4 @@
-import NewDepositForm from '@/app/components/NewDepositForm';
+import AccountDepositForm from '@/app/components/Account/AccountDepositForm';
 import { cookies } from 'next/headers';
 import React from 'react'
 
@@ -9,8 +9,8 @@ export default function DepositPage() {
 
   return (
     <div className="w-full flex flex-col p-8 border border-gray-500">
-        <div>Nuevo depósito</div>
-        <NewDepositForm accountId={accountId} token={token}/>
+      <div>Nuevo depósito</div>
+      <AccountDepositForm accountId={accountId} token={token} />
     </div>
   )
 }

@@ -1,10 +1,10 @@
 "use client"
 
 import React from 'react'
-import { UserDataTypes } from '../api/user/RRRroute'
-import { editUser } from '../services/user.services'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
+import { editUser } from '@/app/services/user.services'
+import { UserDataTypes } from '@/app/api/user/RRRroute'
 
 export default function UserEditForm({ userData, userId, token }: { userData: UserDataTypes, userId: string, token: string }) {
 
@@ -22,7 +22,7 @@ export default function UserEditForm({ userData, userId, token }: { userData: Us
     }
 
     const userEditResp = await editUser(userId, newUser, token)
-    console.log("Usuario editado", {userEditResp})
+    console.log("Usuario editado", { userEditResp })
     router.push(`/dashboard/profile`)
     router.refresh();
   }

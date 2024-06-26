@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import React from 'react'
-import { AccountDataTypes } from '../api/accounts/RRRroute'
-import { getAccountData } from '../services/account.services'
+import { AccountDataTypes } from '../../api/accounts/RRRroute'
+import { getAccountData } from '../../services/account.services'
 
 export default async function AccountCard({ token }: { token: string }) {
 

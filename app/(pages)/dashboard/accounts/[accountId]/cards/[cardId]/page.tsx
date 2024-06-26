@@ -1,4 +1,4 @@
-import DeleteCardForm from '@/app/components/DeleteCardForm';
+import CardDeleteForm from '@/app/components/Card/CardDeleteForm';
 import { getCardData } from '@/app/services/card.services';
 import { CardsDataTypes } from '@/app/types/card.types';
 import { cookies } from 'next/headers';
@@ -21,7 +21,7 @@ export default async function AccountCard({ params }: { params: { cardId: string
         </div>
       </div>
 
-      <DeleteCardForm actualCardId={actualCard.id.toString()} accountId={accountId} token={token} />
+      <CardDeleteForm actualCardId={actualCard.id.toString()} accountId={accountId} token={token} />
     </>
   )
 }

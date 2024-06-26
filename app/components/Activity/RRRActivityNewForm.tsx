@@ -1,12 +1,11 @@
 "use client"
 
+import { postNewActivity } from '@/app/services/account.services';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import React from 'react'
-import { postNewCard } from '../services/card.services';
-import { postNewActivity } from '../services/account.services';
 
-export default function NewActivityForm({ accountId, token }: { accountId: string, token: string }) {
+export default function ActivityNewForm({ accountId, token }: { accountId: string, token: string }) {
   const router = useRouter()
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {

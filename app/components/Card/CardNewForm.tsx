@@ -3,13 +3,13 @@
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import React from 'react'
-import { postCard } from '../services/card.services';
+import { postCard } from '../../services/card.services';
 
 function randomNumber() {
     return Math.random() * (9999999999999999 - 1000000000000000) + 1000000000000000;
 }
 
-export default function NewCardForm({ accountId, token }: { accountId: string, token: string }) {
+export default function CardNewForm({ accountId, token }: { accountId: string, token: string }) {
     const router = useRouter()
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {

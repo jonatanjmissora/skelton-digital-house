@@ -12,8 +12,12 @@ export const editAlias = async (accountId: string, dataObj: object, token: strin
 
 //*****************************************************************************
 //                  ACTIVITY
-export const getActivityData = async (accountId: string, token: string) => {
+export const getActivitiesData = async (accountId: string, token: string) => {
     return getData(`api/accounts/${accountId}/activity`, token)
+}
+
+export const getTransactionData = async (transactionId: string, accountId: string, token: string) => {
+    return getData(`api/accounts/${accountId}/transactions/${transactionId}`, token)
 }
 
 //*****************************************************************************
@@ -29,6 +33,6 @@ export const postTransference = async (accountId: string, newTransference: objec
 }
 
 export const postNewActivity = async (accountId: string, newActivity: object, token: string) => {
-    return 
+    return
 }
 

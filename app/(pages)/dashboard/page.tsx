@@ -1,6 +1,6 @@
-import { AccountDataTypes } from "@/app/api/accounts/RRRroute";
-import AccountCard from "@/app/components/AccountCard";
-import { getAccountData, getActivityData } from "@/app/services/account.services";
+import AccountCard from "@/app/components/Account/AccountCard";
+import ActivityCard from "@/app/components/Activity/ActivityCard";
+import { getActivitiesData } from "@/app/services/account.services";
 import { ActivityDataTypes } from "@/app/types/account.types";
 import { cookies } from "next/headers"
 import Link from "next/link";
@@ -10,7 +10,7 @@ export default async function Dashboard() {
   const token = cookies().get('token')?.value ?? '';
   const accountId = cookies().get('accountid')?.value ?? '';
 
-  const activityData: ActivityDataTypes[] = await getActivityData(accountId, token)
+  const activitiesData: ActivityDataTypes[] = await getActivitiesData(accountId, token)
 
   return (
     <>
@@ -21,20 +21,12 @@ export default async function Dashboard() {
         <Link href="/dashboard/services">Pagar servicios</Link>
       </div>
 
-      <div className="w-full flex justify-between p-8 border border-gray-500">
+      <div className="w-full flex justify-between p-8 py-2 border border-gray-500">
         <input className="p-2" type="text" placeholder="Buscar en tu actividad" />
       </div>
 
       <div className="w-full flex flex-col p-8 border border-gray-500">
-        <h2>Actividad: </h2>
-        {activityData.length === 0 && <span>No hay actividad</span>}
-        <div className="my-2">
-          {activityData.length !== 0 &&
-            activityData.slice(0, 4).map(activity =>
-              <ActivityRow key={activity.id} activity={activity} />
-            )
-          }
-        </div>
+        <ActivityCard activities={activitiesData.slice(0, 4)} />
         <Link href={`/dashboard/accounts/${accountId}/activity?page=1`}>Ver +</Link>
       </div>
     </>

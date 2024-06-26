@@ -1,4 +1,4 @@
-import UserEditForm from '@/app/components/UserEditForm'
+import UserEditForm from '@/app/components/User/UserEditForm'
 import { getUserData } from '@/app/services/user.services'
 import { cookies } from 'next/headers';
 import React from 'react'
@@ -11,11 +11,11 @@ export default async function ProfileEdit() {
 
   return (
     <>
-      <div  className="w-full flex flex-col p-8 border border-gray-500">
+      <div className="w-full flex flex-col p-8 border border-gray-500">
         <h2>Edit profile</h2>
-        <UserEditForm userData={userData} userId={userId} token={token}/>
+        <UserEditForm userData={userData} userId={userId} token={token} />
       </div>
-      
+
     </>
   )
 }
