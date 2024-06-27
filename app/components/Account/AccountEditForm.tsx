@@ -30,13 +30,17 @@ export default function AccountEditForm({ accountData, token }: { accountData: A
         CVU: {accountData.cvu}
       </span>
 
-      <input
-        type="text"
-        name="alias"
-        required
-        defaultValue={accountData.alias}
-        className='border border-gray-500 p-2 text-center w-max'
-      />
+      <div className='flex gap-2 items-center'>
+        <label htmlFor="alias">Alias: </label>
+        <input
+          id="alias"
+          type="text"
+          name="alias"
+          required
+          defaultValue={accountData.alias}
+          className='border border-gray-500 p-2 text-center w-max'
+        />
+      </div>
       <div className='flex gap-4 mt-4'>
         <button type="submit" className='btn w-max'>Editar</button>
         <Link href={`/dashboard/profile`} className='btn'>Cancelar</Link>

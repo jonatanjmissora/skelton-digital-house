@@ -13,7 +13,7 @@ export default function ActivityPagination({ totalActivityLength }: { totalActiv
   const actualPage = params.get("page") ?? 0
 
   const paginationContent = Array
-    .from({ length: totalActivityLength / ACTIVITIES_PER_PAGE + 1 }, (_, index) => index + 1);
+    .from({ length: totalActivityLength / ACTIVITIES_PER_PAGE }, (_, index) => index + 1);
 
   const handleClick = (val: number) => {
     if (actualPage != val) {

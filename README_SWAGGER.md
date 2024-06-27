@@ -20,6 +20,8 @@ TRANSACTIONS => GET => api/accounts/{account_id}/activity   obtengo todas las op
                                                                 entrada: token, account_id
                                                                 salida { amount, dated, description }
 
+                                                                ******* amount negativo *********
+
             => GET => api/accounts/{account_id}/activity   obtengo transaccion segun id
                                                             entrada: token, account_id, transaction_id
                                                             salida: arreglo con  { account_id, amount, dated, description, destination, id, origin, type }
@@ -48,6 +50,8 @@ TRANSFERENCES => POST => api/accounts/{account_id}/deposits   creo un nuevo depo
                                                               entrada: token, account_id, { amount, dated, destination, origin }
                                                               salida: arreglo con  { account_id, amount, dated, description, destination, id, origin, type }
 
+                                                              ******* amount positivo **********
+
               => GET => api/accounts/{account_id}/transferences  obtengo todas las transferencias
                                                                  entrada: token, account_id
                                                                  salida arreglo de { account_id, amount, dated, description, destination, id, origin, type }
@@ -55,6 +59,8 @@ TRANSFERENCES => POST => api/accounts/{account_id}/deposits   creo un nuevo depo
               => POST => api/accounts/{account_id}/transferences  creo una nueva transferencia
                                                                   entrada: token, account_id, { amount, dated, destination, origin }
                                                                   salida: { account_id, amount, dated, description, destination, id, origin, type }
+
+                                                                  ****** amount negativo, origin accountCVU ******
 
 ---------------------------------------------------------------------------------------------------------
 

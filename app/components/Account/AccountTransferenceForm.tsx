@@ -32,14 +32,14 @@ export default function AccountTransferenceForm({ accountId, accountCVU, token }
             </div>
             <div className='flex gap-4 items-center'>
                 <label htmlFor="origen">origen: </label>
-                <input className='border border-gray-500 p-2 text-center' type="text" id='origen' readOnly name="origin" value={accountCVU} />
+                <input className='border border-gray-500 p-2 text-center bg-gray-300' type="text" id='origen' readOnly name="origin" value={accountCVU} />
             </div>
             <div className='flex gap-4 items-center'>
                 <label htmlFor="destino">destino: </label>
                 <input className='border border-gray-500 p-2 text-center' type="text" id='destino' required name="destination" defaultValue={"Albana"} />
             </div>
             <div className='flex gap-4 mt-4'>
-                <button type='submit' className='btn'>Realizar trasnferencia</button>
+                <button type='submit' className='btn'>Realizar transferencia</button>
                 <Link href={`/dashboard`} className='btn'>Cancelar</Link>
             </div>
         </form>

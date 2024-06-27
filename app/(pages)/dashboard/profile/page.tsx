@@ -1,5 +1,6 @@
 import { AccountDataTypes } from '@/app/api/accounts/RRRroute'
 import { UserDataTypes } from '@/app/api/user/RRRroute';
+import AccountData from '@/app/components/Account/AccountData';
 import { getAccountData } from '@/app/services/account.services';
 import { getUserData } from '@/app/services/user.services';
 import { cookies } from 'next/headers';
@@ -13,7 +14,7 @@ export default async function ProfilePage() {
   const accountDataPromise: Promise<AccountDataTypes> = await getAccountData(token)
   const userDataPromise: Promise<UserDataTypes> = await getUserData(userId, token)
   const [accountData, userData] = await Promise.all([accountDataPromise, userDataPromise])
-  if(!accountData || !userData) return <>No hay datos</>
+  if (!accountData || !userData) return <>No hay datos</>
 
   return (
     <>
@@ -25,10 +26,7 @@ export default async function ProfilePage() {
 
       </div>
       <div className="w-full flex justify-between p-8 border border-gray-500"><Link href={`/dashboard/accounts/${accountData.id}/cards`}>Medios de pago</Link></div>
-      <div className="w-full flex justify-between p-8 border border-gray-500">
-        <span>CVU : {accountData.cvu}</span>
-        <Link href={`/dashboard/accounts/${accountData.id}`}>Alias : {accountData.alias}</Link>
-      </div>
+      <AccountData accountData={accountData} />
     </>
   )
 }

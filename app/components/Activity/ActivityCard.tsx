@@ -22,7 +22,8 @@ const ActivityRow = ({ activity }: { activity: ActivityDataTypes }) => {
 
   return (
     <Link href={`dashboard/accounts/${activity.account_id}/activity/${activity.id}`} className="w-full flex justify-between py-4 hover:bg-white">
-      <span className='w-[30%]'>{activity.description}</span>
+      <span className='w-[20%]'>{activity.description}</span>
+      <span>{activity.type}</span>
       <span>{activity.dated.substring(0, 10)}</span>
       <span>{activity.amount}</span>
     </Link>
