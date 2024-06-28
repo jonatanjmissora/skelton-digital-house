@@ -1,12 +1,9 @@
-import AccountDepositForm from '@/app/components/Account/AccountDepositForm';
-import { cookies } from 'next/headers';
+import { getCookies } from '@/app/services/getCookies.services';
 import Link from 'next/link';
-import React from 'react'
 
 export default function DepositPage() {
 
-  const token = cookies().get('token')?.value ?? '';
-  const accountId = cookies().get('accountid')?.value ?? '';
+  const { token, accountId } = getCookies()
 
   return (
     <div className="w-full flex flex-col gap-4 p-8 border border-gray-500">

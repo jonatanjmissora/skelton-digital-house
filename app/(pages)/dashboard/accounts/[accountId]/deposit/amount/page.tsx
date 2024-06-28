@@ -1,11 +1,9 @@
-import { cookies } from 'next/headers'
-import Link from 'next/link'
+import { getCookies } from '@/app/services/getCookies.services'
 import { redirect } from 'next/navigation'
-import React from 'react'
 
 export default function DepositAmount({ searchParams }: { searchParams: { amount: string } }) {
 
-  const accountId = cookies().get("accountid")?.value ?? ""
+  const { token, accountId } = getCookies()
   const amount = Number(searchParams.amount)
 
   const onSubmit = async (formData: FormData) => {

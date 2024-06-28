@@ -1,6 +1,6 @@
 "use client"
 
-import { AccountDataTypes } from "@/app/api/accounts/RRRroute"
+import { AccountDataTypes } from "@/app/types/account.types";
 import Link from "next/link"
 
 export default function AccountData({ accountData }: { accountData: AccountDataTypes }) {

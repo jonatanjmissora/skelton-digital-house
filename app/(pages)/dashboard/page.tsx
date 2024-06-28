@@ -1,14 +1,13 @@
 import AccountCard from "@/app/components/Account/AccountCard";
 import ActivityCard from "@/app/components/Activity/ActivityCard";
 import { getActivitiesData } from "@/app/services/account.services";
+import { getCookies } from "@/app/services/getCookies.services";
 import { ActivityDataTypes } from "@/app/types/account.types";
-import { cookies } from "next/headers"
 import Link from "next/link";
 
 export default async function Dashboard() {
 
-  const token = cookies().get('token')?.value ?? '';
-  const accountId = cookies().get('accountid')?.value ?? '';
+  const { token, accountId } = getCookies()
 
   const activitiesData: ActivityDataTypes[] = await getActivitiesData(accountId, token)
 

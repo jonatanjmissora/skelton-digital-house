@@ -1,13 +1,11 @@
-import { getActivitiesData, getActivityData } from '@/app/services/account.services';
-import { ActivityDataTypes } from '@/app/types/account.types';
-import { cookies } from 'next/headers';
+import { getActivityData } from '@/app/services/account.services';
+import { getCookies } from '@/app/services/getCookies.services';
 import Link from 'next/link';
-import React from 'react'
 
 export default async function ActivityPage({ params }: { params: { accountId: string, activityId: string } }) {
 
-  const token = cookies().get('token')?.value ?? '';
-  const { accountId, activityId } = params
+  const { token, accountId } = getCookies()
+  const { activityId } = params
   const actualActivity = await getActivityData(activityId, accountId, token)
 
   return (

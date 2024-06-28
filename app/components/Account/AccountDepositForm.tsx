@@ -3,7 +3,6 @@
 import { postDeposit } from '@/app/services/account.services';
 import { DepositDataTypes, DepositTypes } from '@/app/types/deposit.types';
 import { useRouter } from 'next/navigation';
-import React from 'react'
 
 export default function AccountDepositForm({ deposit, accountId, token }: { deposit: DepositTypes, accountId: string, token: string }) {
     const router = useRouter()

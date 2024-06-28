@@ -1,4 +1,3 @@
-import React from 'react'
 import { ActivityDataTypes } from '../../types/account.types'
 import Link from 'next/link'
 

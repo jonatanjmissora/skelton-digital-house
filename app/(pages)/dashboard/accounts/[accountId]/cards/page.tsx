@@ -1,13 +1,11 @@
 import { getCardsData } from '@/app/services/card.services';
+import { getCookies } from '@/app/services/getCookies.services';
 import { CardsDataTypes } from '@/app/types/card.types';
-import { cookies } from 'next/headers';
 import Link from 'next/link'
-import React from 'react'
 
 export default async function CardsPage() {
 
-  const token = cookies().get('token')?.value ?? '';
-  const accountId = cookies().get('accountid')?.value ?? '';
+  const { token, accountId } = getCookies()
   const cardsData: CardsDataTypes[] = await getCardsData(accountId, token)
 
   return (

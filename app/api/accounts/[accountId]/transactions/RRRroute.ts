@@ -1,12 +1,11 @@
-import { cookies } from "next/headers";
+import { getCookies } from "@/app/services/getCookies.services";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(request: NextRequest) {
 
   try {
     const { amount, dated, description } = await request.json();
-    const token = cookies().get("token")?.value ?? ""
-    const accountId = cookies().get("accountid")?.value ?? ""
+    const { token, accountId } = getCookies()
     console.log("NEWACTIVITY", { amount, dated, description })
 
     const newActivityResp = await fetch(`https://digitalmoney.digitalhouse.com/api/accounts/${accountId}/transactions`, {

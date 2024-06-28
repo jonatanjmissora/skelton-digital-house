@@ -1,11 +1,10 @@
 import AccountEditForm from '@/app/components/Account/AccountEditForm';
 import { getAccountData } from '@/app/services/account.services';
-import { cookies } from 'next/headers';
-import React from 'react'
+import { getCookies } from '@/app/services/getCookies.services';
 
 export default async function AccountPage() {
 
-  const token = cookies().get('token')?.value ?? '';
+  const { token, accountId } = getCookies()
   const accountData = await getAccountData(token)
 
   return (

@@ -1,6 +1,5 @@
 "use client"
 
-import React from 'react'
 import { ACTIVITIES_PER_PAGE } from '../../utils/constants';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
@@ -13,7 +12,7 @@ export default function ActivityPagination({ totalActivityLength }: { totalActiv
   const actualPage = params.get("page") ?? 0
 
   const paginationContent = Array
-    .from({ length: totalActivityLength / ACTIVITIES_PER_PAGE }, (_, index) => index + 1);
+    .from({ length: Math.ceil(totalActivityLength / ACTIVITIES_PER_PAGE) }, (_, index) => index + 1);
 
   const handleClick = (val: number) => {
     if (actualPage != val) {

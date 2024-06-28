@@ -1,13 +1,11 @@
-import { AccountDataTypes } from '@/app/api/accounts/RRRroute';
 import AccountTransferenceForm from '@/app/components/Account/AccountTransferenceForm';
 import { getAccountData } from '@/app/services/account.services';
-import { cookies } from 'next/headers';
-import React from 'react'
+import { getCookies } from '@/app/services/getCookies.services';
+import { AccountDataTypes } from '@/app/types/account.types';
 
 export default async function TransferencesPage() {
 
-  const token = cookies().get('token')?.value ?? '';
-  const accountId = cookies().get('accountid')?.value ?? '';
+  const { token, accountId } = getCookies()
   const accountData: AccountDataTypes = await getAccountData(token)
 
   return (

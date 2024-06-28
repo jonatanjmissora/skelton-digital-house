@@ -2,7 +2,6 @@
 
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import React from 'react'
 import { postCard } from '../../services/card.services';
 
 function randomNumber() {

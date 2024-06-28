@@ -3,11 +3,11 @@ import ActivityFilter from '@/app/components/Activity/ActivityFilter';
 import ActivityPagination from '@/app/components/Activity/ActivityPagination';
 import ActivitySearch from '@/app/components/Activity/ActivitySearch';
 import { getActivitiesData } from '@/app/services/account.services';
+import { getCookies } from '@/app/services/getCookies.services';
 import { ActivityDataTypes } from '@/app/types/account.types';
 import { ACTIVITIES_PER_PAGE } from '@/app/utils/constants';
 import { getActualActivities } from '@/app/utils/getActualActivities';
-import { cookies } from 'next/headers';
-import React, { Suspense } from 'react'
+import { Suspense } from 'react'
 
 type ParamsType = {
   filter?: string;
@@ -20,8 +20,7 @@ export default async function ActivityPage({ searchParams }: { searchParams: Par
   const filter = searchParams.filter
   const page = searchParams.page
 
-  const token = cookies().get('token')?.value ?? '';
-  const accountId = cookies().get('accountid')?.value ?? '';
+  const { token, accountId } = getCookies()
   const activityData: ActivityDataTypes[] = await getActivitiesData(accountId, token)
 
   const filteredActivities = getActualActivities(activityData, filter, search)

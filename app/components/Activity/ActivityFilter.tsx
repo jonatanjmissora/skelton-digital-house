@@ -1,7 +1,7 @@
 "use client"
 
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
-import React, { useRef } from 'react'
+import { useRef } from 'react'
 
 const formatFilterText = (value: string) => {
   if (value === "" || value === "hoy") return value

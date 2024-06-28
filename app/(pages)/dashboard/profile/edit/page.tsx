@@ -1,11 +1,11 @@
 import UserEditForm from '@/app/components/User/UserEditForm'
+import { getCookies } from '@/app/services/getCookies.services';
 import { getUserData } from '@/app/services/user.services'
 import { cookies } from 'next/headers';
-import React from 'react'
 
 export default async function ProfileEdit() {
 
-  const token = cookies().get('token')?.value ?? '';
+  const { token, accountId } = getCookies()
   const userId = cookies().get('userid')?.value ?? '';
   const userData = await getUserData(userId, token)
 

@@ -1,10 +1,9 @@
 "use client"
 
-import React from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { editUser } from '@/app/services/user.services'
-import { UserDataTypes } from '@/app/api/user/RRRroute'
+import { UserDataTypes } from '@/app/types/user.types'
 
 export default function UserEditForm({ userData, userId, token }: { userData: UserDataTypes, userId: string, token: string }) {
 

@@ -1,13 +1,12 @@
 import CardDeleteForm from '@/app/components/Card/CardDeleteForm';
 import { getCardData } from '@/app/services/card.services';
+import { getCookies } from '@/app/services/getCookies.services';
 import { CardsDataTypes } from '@/app/types/card.types';
-import { cookies } from 'next/headers';
 
 export default async function AccountCard({ params }: { params: { cardId: string } }) {
 
   const { cardId } = params
-  const token = cookies().get('token')?.value ?? '';
-  const accountId = cookies().get('accountid')?.value ?? '';
+  const { token, accountId } = getCookies()
   const actualCard: CardsDataTypes = await getCardData(cardId, accountId, token)
 
   return (

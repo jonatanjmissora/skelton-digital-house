@@ -1,15 +1,13 @@
-import { AccountDataTypes } from '@/app/api/accounts/RRRroute'
 import AccountDepositForm from '@/app/components/Account/AccountDepositForm'
 import { getAccountData } from '@/app/services/account.services'
+import { getCookies } from '@/app/services/getCookies.services'
+import { AccountDataTypes } from '@/app/types/account.types'
 import { DepositTypes } from '@/app/types/deposit.types'
-import { cookies } from 'next/headers'
 import Link from 'next/link'
-import React from 'react'
 
 export default async function DepositCheckout({ searchParams }: { searchParams: { amount: string } }) {
 
-  const token = cookies().get("token")?.value ?? ""
-  const accountId = cookies().get("accountid")?.value ?? ""
+  const { token, accountId } = getCookies()
   const amount = searchParams.amount
   const accountData: AccountDataTypes = await getAccountData(token)
   const deposit: DepositTypes = { amount: Number(amount), destination: accountData.cvu, origin: accountData.cvu }

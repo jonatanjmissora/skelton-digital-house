@@ -1,11 +1,9 @@
 "use client"
 
-import React from 'react'
-import { editUser } from '../../services/user.services'
-import { AccountDataTypes } from '../../api/accounts/RRRroute'
 import { useRouter } from 'next/navigation'
 import { editAlias } from '../../services/account.services'
 import Link from 'next/link'
+import { AccountDataTypes } from '@/app/types/account.types'
 
 export default function AccountEditForm({ accountData, token }: { accountData: AccountDataTypes, token: string }) {
 

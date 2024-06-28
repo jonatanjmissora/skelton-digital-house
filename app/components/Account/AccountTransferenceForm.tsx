@@ -2,8 +2,7 @@
 
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import React from 'react'
-import { postDeposit, postTransference } from '../../services/account.services';
+import { postTransference } from '../../services/account.services';
 
 
 export default function AccountTransferenceForm({ accountId, accountCVU, token }: { accountId: string, accountCVU: string, token: string }) {

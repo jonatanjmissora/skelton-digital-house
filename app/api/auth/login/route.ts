@@ -1,10 +1,10 @@
 import { jwtDecode } from "jwt-decode";
 import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
-import { DecodeTokenTypes } from "../../user/RRRroute";
-import { getData } from "@/app/services/direct.services";
 import { getUserData } from "@/app/services/user.services";
 import { getAccountData } from "@/app/services/account.services";
+import { DecodeTokenTypes, UserDataTypes } from "@/app/types/user.types";
+import { AccountDataTypes } from "@/app/types/account.types";
 
 const cookieOptions = { expires: new Date(new Date().getTime() + 3600000) }
 
@@ -28,8 +28,8 @@ export async function POST(request: NextRequest) {
     const { token } = loginData
     const { username: userId } = jwtDecode<DecodeTokenTypes>(token)
 
-    const userDataPromise = await getUserData(userId, token,)
-    const accountDataPromise = await getAccountData(token)
+    const userDataPromise: Promise<UserDataTypes> = await getUserData(userId, token,)
+    const accountDataPromise: Promise<AccountDataTypes> = await getAccountData(token)
     const [userData, accountData] = await Promise.all([userDataPromise, accountDataPromise])
 
     const userName = `${userData.firstname} ${userData.lastname}`

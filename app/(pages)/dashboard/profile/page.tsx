@@ -1,15 +1,15 @@
-import { AccountDataTypes } from '@/app/api/accounts/RRRroute'
-import { UserDataTypes } from '@/app/api/user/RRRroute';
 import AccountData from '@/app/components/Account/AccountData';
 import { getAccountData } from '@/app/services/account.services';
+import { getCookies } from '@/app/services/getCookies.services';
 import { getUserData } from '@/app/services/user.services';
+import { AccountDataTypes } from '@/app/types/account.types';
+import { UserDataTypes } from '@/app/types/user.types';
 import { cookies } from 'next/headers';
 import Link from 'next/link';
-import React from 'react'
 
 export default async function ProfilePage() {
 
-  const token = cookies().get('token')?.value ?? '';
+  const { token, accountId } = getCookies()
   const userId = cookies().get('userid')?.value ?? '';
   const accountDataPromise: Promise<AccountDataTypes> = await getAccountData(token)
   const userDataPromise: Promise<UserDataTypes> = await getUserData(userId, token)

@@ -1,11 +1,9 @@
 import CardNewForm from '@/app/components/Card/CardNewForm';
-import { cookies } from 'next/headers';
-import React from 'react'
+import { getCookies } from '@/app/services/getCookies.services';
 
 export default function NewCardPage() {
 
-  const token = cookies().get("token")?.value ?? "";
-  const accountId = cookies().get("accountid")?.value ?? "";
+  const { token, accountId } = getCookies()
 
   return (
     <>

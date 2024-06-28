@@ -1,3 +1,4 @@
+import { getCookies } from "@/app/services/getCookies.services";
 import { cookies, headers } from "next/headers"
 import { NextRequest, NextResponse } from "next/server"
 
@@ -34,14 +35,11 @@ export async function GET(request: NextRequest) {
   }
 }
 
-
-
 export async function POST(request: NextRequest) {
 
   try {
     const newCard = await request.json();
-    const token = cookies().get("token")?.value ?? ""
-    const accountId = cookies().get("accountid")?.value ?? ""
+    const { token, accountId } = getCookies()
 
     const newCardResp = await fetch(`https://digitalmoney.digitalhouse.com/api/accounts/${accountId}/cards`, {
       method: 'POST',

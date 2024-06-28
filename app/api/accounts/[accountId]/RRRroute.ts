@@ -1,10 +1,9 @@
-import { cookies, headers } from "next/headers"
+import { getCookies } from "@/app/services/getCookies.services"
 import { NextRequest, NextResponse } from "next/server"
 
 export async function PATCH(request: NextRequest) {
   try {
-    const token = cookies().get("token")?.value ?? ""
-    const accountId = request.url.split("/")[5]
+    const { token, accountId } = getCookies()
     const body = {
       "alias": "HOLA.MUNDO.REDONDO"
     }

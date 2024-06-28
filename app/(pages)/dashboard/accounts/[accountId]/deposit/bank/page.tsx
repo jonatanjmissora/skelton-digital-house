@@ -1,13 +1,12 @@
-import { AccountDataTypes } from '@/app/api/accounts/RRRroute'
 import AccountData from '@/app/components/Account/AccountData'
 import { getAccountData } from '@/app/services/account.services'
-import { cookies } from 'next/headers'
+import { getCookies } from '@/app/services/getCookies.services'
+import { AccountDataTypes } from '@/app/types/account.types'
 import Link from 'next/link'
-import React from 'react'
 
 export default async function DepositBank({ params }: { params: { accountId: string } }) {
 
-  const token = cookies().get("token")?.value ?? ""
+  const { token, accountId } = getCookies()
   const accountData: AccountDataTypes = await getAccountData(token)
 
   return (

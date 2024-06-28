@@ -1,9 +1,10 @@
+import { getCookies } from "@/app/services/getCookies.services";
 import { cookies, headers } from "next/headers";
 import { NextResponse } from "next/server";
 
 export async function DELETE(request: Request, { params }: { params: { accountId: string, cardId: string } }) {
-  const token = cookies().get("token")?.value ?? ""
-  const { accountId, cardId } = params
+  const { token, accountId } = getCookies()
+  const { accountId: account, cardId } = params
 
   try {
     const deleteCardResp = await fetch(`https://digitalmoney.digitalhouse.com/api/accounts/${accountId}/cards/${cardId}`, {

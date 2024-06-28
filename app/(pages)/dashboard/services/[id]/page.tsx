@@ -2,7 +2,6 @@ import { getService } from '@/app/services/services.services';
 import { ServiceTypes } from '@/app/types/service.types';
 import { cookies } from 'next/headers';
 import Link from 'next/link';
-import React from 'react'
 
 export default async function ServicePage({ params }: { params: { id: string } }) {
 
