@@ -8,11 +8,11 @@ export default async function ServicesPage() {
 
   return (
     <>
-      <div className="w-full flex flex-col p-8 border border-gray-500">
+      <div className="card">
         <input className="p-2" type="text" placeholder="Buscá entre más de 5.000 empresas" />
       </div>
 
-      <div className="w-full flex flex-col p-8 border border-gray-500">
+      <div className="card">
         <div className="mb-4">Servicios</div>
         {servicesData.map(service => <ServiceRow key={service.id} service={service} />)}
       </div>

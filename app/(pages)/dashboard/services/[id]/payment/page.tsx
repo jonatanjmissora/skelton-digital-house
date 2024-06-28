@@ -10,7 +10,7 @@ export default async function ServicePaymentPage({ params }: { params: { id: str
   const actualService: ServiceTypes = await getService(id, userId)
 
   return (
-    <div className="w-full flex flex-col p-8 border border-gray-500">
+    <div className="card">
       <div>
         <div className='w-full flex justify-between mt-4'>
           <span>{actualService.name}</span>

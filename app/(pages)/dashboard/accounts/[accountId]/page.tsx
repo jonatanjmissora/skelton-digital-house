@@ -9,7 +9,7 @@ export default async function AccountPage() {
 
   return (
     <>
-      <div className="w-full flex flex-col p-8 border border-gray-500">
+      <div className="card">
         <h2>Edit account</h2>
         <AccountEditForm accountData={accountData} token={token} />
       </div>

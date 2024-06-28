@@ -11,7 +11,7 @@ export default async function ProfileEdit() {
 
   return (
     <>
-      <div className="w-full flex flex-col p-8 border border-gray-500">
+      <div className="card">
         <h2>Edit profile</h2>
         <UserEditForm userData={userData} userId={userId} token={token} />
       </div>

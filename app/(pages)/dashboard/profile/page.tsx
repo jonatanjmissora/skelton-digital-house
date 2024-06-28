@@ -18,14 +18,14 @@ export default async function ProfilePage() {
 
   return (
     <>
-      <div className="w-full flex flex-col p-8 border border-gray-500">
+      <div className="card">
         <ProfileRow rowKey="Email:" rowValue={userData.email} />
         <ProfileRow rowKey="Nombre:" rowValue={`${userData.firstname}, ${userData.lastname}`} />
         <ProfileRow rowKey="DNI:" rowValue={userData.dni.toString()} />
         <ProfileRow rowKey="Telefono:" rowValue={userData.phone} />
 
       </div>
-      <div className="w-full flex justify-between p-8 border border-gray-500"><Link href={`/dashboard/accounts/${accountData.id}/cards`}>Medios de pago</Link></div>
+      <div className="card"><Link href={`/dashboard/accounts/${accountData.id}/cards`}>Medios de pago</Link></div>
       <AccountData accountData={accountData} />
     </>
   )

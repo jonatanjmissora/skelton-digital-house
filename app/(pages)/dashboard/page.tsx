@@ -24,7 +24,7 @@ export default async function Dashboard() {
         <input className="p-2" type="text" placeholder="Buscar en tu actividad" />
       </div>
 
-      <div className="w-full flex flex-col p-8 border border-gray-500">
+      <div className="card">
         <ActivityCard activities={activitiesData.slice(0, 4)} />
         <Link href={`/dashboard/accounts/${accountId}/activity?page=1`}>Ver +</Link>
       </div>

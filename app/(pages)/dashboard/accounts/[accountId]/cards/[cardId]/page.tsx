@@ -11,7 +11,7 @@ export default async function AccountCard({ params }: { params: { cardId: string
 
   return (
     <>
-      <div className="w-full flex flex-col p-8 border border-gray-500">
+      <div className="card">
         <h2>Tarjeta: {cardId}</h2>
         <div className='flex flex-col gap-1 mt-2'>
           <span>Numero : {actualCard.number_id}</span>

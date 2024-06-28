@@ -9,7 +9,7 @@ export default async function TransferencesPage() {
   const accountData: AccountDataTypes = await getAccountData(token)
 
   return (
-    <div className="w-full flex flex-col p-8 border border-gray-500">
+    <div className="card">
       <div>Nueva transferencia</div>
       <AccountTransferenceForm accountId={accountId} accountCVU={accountData.cvu} token={token} />
     </div>

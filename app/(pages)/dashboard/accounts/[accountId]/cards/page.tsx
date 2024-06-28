@@ -10,11 +10,11 @@ export default async function CardsPage() {
 
   return (
     <>
-      <div className="w-full flex flex-col p-8 border border-gray-500">
+      <div className="card">
         <Link href={`/dashboard/accounts/${accountId}/cards/new`}>Nueva tarjeta +</Link>
       </div>
 
-      <div className="w-full flex flex-col p-8 border border-gray-500">
+      <div className="card">
         <span className='mb-4'>Tus tarjetas</span>
         {cardsData && cardsData.map(card => <CardRow key={card.id} card={card} />)}
         {!cardsData && <>No hay targetas cargadas</>}

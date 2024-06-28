@@ -28,7 +28,7 @@ export default function CardDeleteForm({ actualCardId, accountId, token }: CardD
     }
 
     return (
-        <div className="w-full flex flex-col p-8 border border-gray-500">
+        <div className="card">
             <p>¿Quiere eliminar la siguiente tarjeta?</p>
             <div className='flex gap-4 mt-4'>
                 <button onClick={handleDelete} className='btn'>Eliminar</button>

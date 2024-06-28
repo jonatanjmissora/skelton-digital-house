@@ -10,7 +10,7 @@ export default async function ActivityPage({ params }: { params: { accountId: st
 
   return (
     <>
-      <div className="w-full flex flex-col p-8 border border-gray-500">
+      <div className="card">
         <h2 className='mb-4'>Actividad:</h2>
         <span>Tipo : {actualActivity.type}</span>
         <span>Descripcion : {actualActivity.description}</span>

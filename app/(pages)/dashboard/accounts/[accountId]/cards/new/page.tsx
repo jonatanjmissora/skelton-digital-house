@@ -7,7 +7,7 @@ export default function NewCardPage() {
 
   return (
     <>
-      <div className="w-full flex flex-col p-8 border border-gray-500">
+      <div className="card">
         Nueva Tarjeta
         <CardNewForm accountId={accountId} token={token} />
       </div>
