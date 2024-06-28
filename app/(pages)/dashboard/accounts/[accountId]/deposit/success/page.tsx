@@ -2,7 +2,7 @@ import { getAccountData, getActivitiesData, getActivityData } from '@/app/servic
 import { getCookies } from '@/app/services/getCookies.services'
 import { AccountDataTypes } from '@/app/types/account.types'
 
-export default async function DepositSuccess({ searchParams }: { searchParams: { id: string } }) {
+export default async function DepositSuccess({ searchParams }: { searchParams: { [key: string]: string | string[] | undefined }}) {
 
   const id = searchParams.id
   const { token, accountId } = getCookies()

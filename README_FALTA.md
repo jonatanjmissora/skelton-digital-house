@@ -1,6 +1,4 @@
-falta agregar tarjetas
-
-cargar dinero
+falta agregar tarjetas UI/UX
 
 pagar servicio
 

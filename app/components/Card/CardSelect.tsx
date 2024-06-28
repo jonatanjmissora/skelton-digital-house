@@ -15,45 +15,51 @@ export default function CardSelect({ cardsData }: { cardsData: CardsDataTypes[] 
   const pathname = usePathname()
   const searchParams = useSearchParams()
 
-  const [selectedCard, setSelectedCard] = useState<string>("")
-
+  const [selectedCard, setSelectedCard] = useState<number>(cardsData[0].number_id)
   useEffect(() => {
-    console.log({ selectedCard })
-
-  }, [selectedCard])
+    const params = new URLSearchParams(searchParams.toString())
+    params.set("cardnum", selectedCard.toString())
+    router.replace(`${pathname}?${params.toString()}`)
+  }, [])
 
   return (
     <>
-      <span>selectedCard: {selectedCard}</span>
-      {cardsData.map(card => <CardRow key={card.id} card={card} setSelectedCard={setSelectedCard} />)}
+      {cardsData.map(card => <CardRow key={card.id} card={card} selectedCard={selectedCard} setSelectedCard={setSelectedCard} />)}
     </>
   )
 }
 
 
-const CardRow = ({ card, setSelectedCard }: { card: CardsDataTypes }) => {
-  /*const router = useRouter()
+const CardRow = ({ card, 
+  selectedCard, 
+  setSelectedCard }: 
+  { card: CardsDataTypes, 
+    selectedCard: number, 
+    setSelectedCard: React.Dispatch<React.SetStateAction<number>> 
+  }) => {
+
+  const router = useRouter()
   const pathname = usePathname()
   const searchParams = useSearchParams()
-  */
-
+  
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const cardId = e.currentTarget.id
-    /*
+    const cardnum = e.currentTarget.id
+    console.log(cardnum)
+    
     const params = new URLSearchParams(searchParams.toString())
-    params.set("id", cardId)
+    params.set("cardnum", cardnum)
     router.replace(`${pathname}?${params.toString()}`)
-    */
-    setSelectedCard(cardId)
+    
+    setSelectedCard(+cardnum)
   }
 
   return (
     <div className='flex justify-between items-center hover:bg-white'>
-      <label className="flex gap-8 flex-1" htmlFor={card.id.toString()}>
+      <label className="flex gap-8 flex-1" htmlFor={card.number_id.toString()}>
         <span>terminada en {getLast4(card.number_id)}</span>
-        <span>id: {card.id}</span>
+        <span>id: {card.number_id}</span>
       </label>
-      <input onChange={handleChange} type="radio" id={card.id.toString()} name="card" />
+      <input onChange={handleChange} type="radio" id={card.number_id.toString()} name="card" checked={selectedCard == card.number_id}/>
     </div>
   )
 }

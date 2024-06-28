@@ -10,8 +10,21 @@ export default async function DepositBank({ params }: { params: { accountId: str
   const accountData: AccountDataTypes = await getAccountData(token)
 
   return (
-    <Link href={`/dashboard/accounts/${accountData.id}/deposit/amount?amount=0`} >
-      <AccountData accountData={accountData} />
-    </Link>
+    <div className="w-full flex justify-between p-8 border border-gray-500">
+      <div className='flex gap-2'>
+        <span>CVU : {accountData.cvu}</span>
+        <Link href={`/dashboard/accounts/${accountData.id}/deposit/amount?cvu=${accountData.cvu}&amount=0`}>copiar</Link>
+      </div>
+      <div className='flex gap-2'>
+        <span>Alias : {accountData.alias}</span>
+        <Link href={`/dashboard/accounts/${accountData.id}/deposit/amount?cvu=${accountData.cvu}&amount=0`}>copiar</Link>
+      </div>
+    </div>
   )
 }
+
+{/*
+  <Link href={`/dashboard/accounts/${accountData.id}/deposit/amount?amount=0`} >
+  <AccountData accountData={accountData} />
+  </Link>
+  */}
