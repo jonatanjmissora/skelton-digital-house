@@ -23,8 +23,14 @@ export default async function ServicesPage() {
 const ServiceRow = ({ service }: { service: ServiceTypes }) => {
   return (
     <div className="w-full flex justify-between py-1 hover:bg-white">
-      <span>{service.name}</span>
-      <Link href={`/dashboard/services/${service.id}`}>Seleccionar</Link>
+      <span className="w-1/3">{service.name}</span>
+      <div className="w-1/3 flex justify-between">
+        <span>id : {service.id}</span>
+        <span>date : {service.date}</span>
+      </div>
+      <div className="w-1/3">
+        <Link className="w-full flex justify-end border-none" href={`/dashboard/services/bill?serviceid=${service.id}`}>Seleccionar</Link>
+      </div>
     </div>
   )
 }

@@ -4,6 +4,6 @@ export const getServicesData = async () => {
     return getData("service")
 }
 
-export const getService = async (id: string, userId: string) => {
-    return getData(`service/${id}`, userId)
+export const getService = async (id: string) => {
+    return getData(`service/${id}`)
 }

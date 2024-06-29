@@ -15,7 +15,7 @@ type ParamsType = {
   page?: string;
 }
 
-export default async function ActivityPage({ searchParams }: { searchParams: ParamsType }) {
+export default async function ActivityPage({ searchParams }: { searchParams: { [key: string]: string | string[] | undefined } }) {
   const search = searchParams.search
   const filter = searchParams.filter
   const page = searchParams.page

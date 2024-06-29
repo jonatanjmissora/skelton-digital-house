@@ -1,5 +1,4 @@
 import { ActivityDataTypes } from "../types/account.types";
-import { ACTIVITIES_PER_PAGE } from "./constants";
 
 export const getActualActivities = (activityData: ActivityDataTypes[], filter?: string, search?: string) => {
   let filteredResult = [...activityData]
