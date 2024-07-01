@@ -3,7 +3,7 @@
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { useDebouncedCallback } from 'use-debounce'
 
-export default function ActivitySearch() {
+export default function SearchBar({ placeholder }: { placeholder: string }) {
 
   const router = useRouter()
   const pathname = usePathname();
@@ -14,6 +14,7 @@ export default function ActivitySearch() {
 
     if (search !== "") {
       params.set('search', search);
+      params.set("page", "1")
     } else {
       params.delete('search');
     }
@@ -25,7 +26,7 @@ export default function ActivitySearch() {
       onChange={(e) => handleChange(e.target.value)}
       className='p-2'
       type="text"
-      placeholder={"Busca en tu actividad"}
+      placeholder={placeholder}
       defaultValue={searchParams.get('search')?.toString()}
     />
   )

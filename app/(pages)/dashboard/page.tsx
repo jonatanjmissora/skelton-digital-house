@@ -1,9 +1,11 @@
 import AccountCard from "@/app/components/Account/AccountCard";
 import ActivityCard from "@/app/components/Activity/ActivityCard";
-import ActivitySearch from "@/app/components/Activity/ActivitySearch";
+import ArrayList from "@/app/components/Services/ArrayList";
+import SearchBar from "@/app/components/SearchBar";
 import { getActivitiesData } from "@/app/services/account.services";
 import { getCookies } from "@/app/services/getCookies.services";
 import { ActivityDataTypes } from "@/app/types/account.types";
+import { ServiceTypes } from "@/app/types/service.types";
 import { getActualActivities } from "@/app/utils/getActualActivities";
 import Link from "next/link";
 import { Suspense } from "react";
@@ -27,27 +29,16 @@ export default async function Dashboard({ searchParams }: { searchParams: { [key
       </div>
 
       <div className="w-full flex flex-col justify-between p-8 py-2 border border-gray-500">
-        <ActivitySearch />
-        {/*<input className="p-2" type="text" placeholder="Buscar en tu actividad" />*/}
+        <SearchBar placeholder={"Busca en tu actividad"} />
       </div>
 
       <div className="card">
         <Suspense key={`${search}`} fallback={"LOADING"}>
           <ActivityCard activities={activitiesToShow} />
         </Suspense>
-        {/*<ActivityCard activities={activitiesData.slice(0, 4)} />*/}
         <Link href={`/dashboard/accounts/${accountId}/activity?page=1`}>Ver +</Link>
       </div>
     </>
 
-  )
-}
-
-const ActivityRow = ({ activity }: { activity: ActivityDataTypes }) => {
-  return (
-    <div className="w-full flex justify-between py-1">
-      <span>{activity.description}</span>
-      <span>{activity.amount}</span>
-    </div>
   )
 }

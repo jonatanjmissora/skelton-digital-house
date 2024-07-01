@@ -22,9 +22,3 @@ export default async function DepositBank({ params }: { params: { accountId: str
     </div>
   )
 }
-
-{/*
-  <Link href={`/dashboard/accounts/${accountData.id}/deposit/amount?amount=0`} >
-  <AccountData accountData={accountData} />
-  </Link>
-  */}

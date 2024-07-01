@@ -1,13 +1,13 @@
 import ActivityCard from '@/app/components/Activity/ActivityCard';
 import ActivityFilter from '@/app/components/Activity/ActivityFilter';
 import ActivityPagination from '@/app/components/Activity/ActivityPagination';
-import ActivitySearch from '@/app/components/Activity/ActivitySearch';
+import ArrayList from '@/app/components/Services/ArrayList';
+import SearchBar from '@/app/components/SearchBar';
 import { getActivitiesData } from '@/app/services/account.services';
 import { getCookies } from '@/app/services/getCookies.services';
 import { ActivityDataTypes } from '@/app/types/account.types';
 import { ACTIVITIES_PER_PAGE } from '@/app/utils/constants';
 import { getActualActivities } from '@/app/utils/getActualActivities';
-import { redirect } from 'next/navigation';
 import { Suspense } from 'react'
 
 export default async function ActivityPage({ searchParams }: { searchParams: { [key: string]: string | string[] | undefined } }) {
@@ -26,7 +26,7 @@ export default async function ActivityPage({ searchParams }: { searchParams: { [
   return (
     <>
       <div className="w-full flex justify-between items-center p-2 px-8 border border-gray-500">
-        <ActivitySearch />
+        <SearchBar placeholder={"Busca en tu actividad"} />
         <ActivityFilter />
       </div>
       <div className="flex-1 w-full flex flex-col justify-between p-8 border border-gray-500">

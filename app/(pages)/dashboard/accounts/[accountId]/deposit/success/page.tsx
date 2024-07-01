@@ -1,8 +1,9 @@
 import { getAccountData, getActivitiesData, getActivityData } from '@/app/services/account.services'
 import { getCookies } from '@/app/services/getCookies.services'
 import { AccountDataTypes } from '@/app/types/account.types'
+import Link from 'next/link'
 
-export default async function DepositSuccess({ searchParams }: { searchParams: { [key: string]: string | string[] | undefined }}) {
+export default async function DepositSuccess({ searchParams }: { searchParams: { [key: string]: string | string[] | undefined } }) {
 
   const id = searchParams.id
   const { token, accountId } = getCookies()
@@ -22,6 +23,7 @@ export default async function DepositSuccess({ searchParams }: { searchParams: {
         <p>Cuenta propia</p>
         <p>CVU {accountData.cvu}</p>
       </div>
+      <Link href={"/dashboard"}>Ir al inicio</Link>
     </>
   )
 }
