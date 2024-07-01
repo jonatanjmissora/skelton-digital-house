@@ -30,26 +30,26 @@ export const postData = async (endpoint: string, dataObj?: object | null, token?
         const res = await fetch(`${SWAGGER}${endpoint}`, {
             method: 'POST',
             headers: !token
-            ? { 'Content-Type': 'application/json' }
-            : {
-                'Content-Type': 'application/json',
-                "Authorization": token
-            },
+                ? { 'Content-Type': 'application/json' }
+                : {
+                    'Content-Type': 'application/json',
+                    "Authorization": token
+                },
             body: JSON.stringify(dataObj ?? {})
         });
-        console.log("ENTRRROOOOOOOOO", {res})
         if (!res.ok) {
-            console.log(`${res.status} - ${res.statusText}`)
-            throw new Error("Failed to post: " + endpoint)
+            console.log(`${res.status} - ${res.statusText || "No text error"} - POST - ${SWAGGER}${endpoint}`)
+            const response = await res.json()
+            throw new Error(response.error)
         }
 
-        const response = await res.json()
         console.log("---------------------------------- DATO CREADO en " + endpoint)
+        const response = await res.json()
+        return { data: response }
 
-        return response;
-    } catch (error) {
-        if (error instanceof Error)
-            console.log("ERROR", error.message)
+    } catch (error: any) {
+        console.log("ERROR : ", error.message)
+        return ({ error: error.message })
     }
 }
 

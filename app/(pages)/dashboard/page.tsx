@@ -1,6 +1,5 @@
 import AccountCard from "@/app/components/Account/AccountCard";
 import ActivityCard from "@/app/components/Activity/ActivityCard";
-import ArrayList from "@/app/components/Services/ArrayList";
 import SearchBar from "@/app/components/SearchBar";
 import { getActivitiesData } from "@/app/services/account.services";
 import { getCookies } from "@/app/services/getCookies.services";

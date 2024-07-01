@@ -1,6 +1,7 @@
 import { getCardsData } from '@/app/services/card.services';
 import { getCookies } from '@/app/services/getCookies.services';
 import { CardsDataTypes } from '@/app/types/card.types';
+import { Toaster } from 'sonner';
 import Link from 'next/link'
 
 export default async function CardsPage() {
@@ -14,12 +15,13 @@ export default async function CardsPage() {
         <Link href={`/dashboard/accounts/${accountId}/cards/new`}>Nueva tarjeta +</Link>
       </div>
 
+
       <div className="card">
         <span className='mb-4'>Tus tarjetas</span>
         {cardsData && cardsData.map(card => <CardRow key={card.id} card={card} />)}
         {!cardsData && <>No hay targetas cargadas</>}
       </div>
-
+      <Toaster />
     </>
   )
 

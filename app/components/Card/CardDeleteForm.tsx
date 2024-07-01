@@ -3,6 +3,9 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { deleteCard } from "../../services/card.services";
+import { useState } from "react";
+import SVGSpinner from "../SVG/SVGSpinner";
+import { toast } from 'sonner';
 
 type CardDeleteFormTypes = {
     actualCardId: string;
@@ -13,17 +16,22 @@ type CardDeleteFormTypes = {
 export default function CardDeleteForm({ actualCardId, accountId, token }: CardDeleteFormTypes) {
 
     const router = useRouter()
+    const [isLoading, setIsLoading] = useState<boolean>(false)
 
     const handleDelete = async () => {
+        setIsLoading(true)
         try {
-
             await deleteCard(actualCardId, accountId, token)
             router.push(`/dashboard/accounts/${accountId}/cards`)
             router.refresh();
+            toast("Tarjeta eliminada")
         }
         catch (error) {
             if (error instanceof Error)
                 console.log(error.message)
+        }
+        finally {
+            setIsLoading(false)
         }
     }
 
@@ -31,7 +39,9 @@ export default function CardDeleteForm({ actualCardId, accountId, token }: CardD
         <div className="card">
             <p>¿Quiere eliminar la siguiente tarjeta?</p>
             <div className='flex gap-4 mt-4'>
-                <button onClick={handleDelete} className='btn'>Eliminar</button>
+                <button onClick={handleDelete} className='btn' disabled={isLoading}>
+                    {isLoading ? <SVGSpinner /> : "Eliminar"}
+                </button>
                 <Link className='btn' href={`/dashboard/accounts/${accountId}/cards`}>Cancelar</Link>
             </div>
         </div>
