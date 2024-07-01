@@ -1,9 +1,9 @@
 import CardSelect from '@/app/components/Card/CardSelect'
-import { getAccountData } from '@/app/services/account.services'
+import { getAccountData, postTransaction } from '@/app/services/account.services'
 import { getCardsData } from '@/app/services/card.services'
 import { getCookies } from '@/app/services/getCookies.services'
-import { getService, getServicesData } from '@/app/services/services.services'
-import { AccountDataTypes } from '@/app/types/account.types'
+import { getService } from '@/app/services/services.services'
+import { AccountDataTypes, ActivityDataTypes } from '@/app/types/account.types'
 import { CardsDataTypes } from '@/app/types/card.types'
 import { ServiceTypes } from '@/app/types/service.types'
 import Link from 'next/link'
@@ -24,7 +24,14 @@ export default async function ServiceCheckout({ searchParams }: { searchParams: 
   const onSubmit = async (formData: FormData) => {
     "use server"
     if (accountData.available_amount >= serviceData.invoice_value * 100) {
-      redirect("/dashboard/services/success")
+      const newTransaction = {
+        amount: -serviceData.invoice_value * 100,
+        dated: new Date(),
+        description: `Pago de ${serviceData.name}`
+      }
+      const transactionResp: ActivityDataTypes = await postTransaction(accountId, newTransaction, token)
+      const transactionid = transactionResp.id
+      redirect(`/dashboard/services/success?serviceid=${transactionid}`)
     }
     else {
       redirect("/dashboard/services/payerror")

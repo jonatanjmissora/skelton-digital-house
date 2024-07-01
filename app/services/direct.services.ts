@@ -30,13 +30,14 @@ export const postData = async (endpoint: string, dataObj?: object | null, token?
         const res = await fetch(`${SWAGGER}${endpoint}`, {
             method: 'POST',
             headers: !token
-                ? { 'Content-Type': 'application/json' }
-                : {
-                    'Content-Type': 'application/json',
-                    "Authorization": token
-                },
+            ? { 'Content-Type': 'application/json' }
+            : {
+                'Content-Type': 'application/json',
+                "Authorization": token
+            },
             body: JSON.stringify(dataObj ?? {})
         });
+        console.log("ENTRRROOOOOOOOO", {res})
         if (!res.ok) {
             console.log(`${res.status} - ${res.statusText}`)
             throw new Error("Failed to post: " + endpoint)

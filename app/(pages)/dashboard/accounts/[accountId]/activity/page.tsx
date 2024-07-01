@@ -7,23 +7,18 @@ import { getCookies } from '@/app/services/getCookies.services';
 import { ActivityDataTypes } from '@/app/types/account.types';
 import { ACTIVITIES_PER_PAGE } from '@/app/utils/constants';
 import { getActualActivities } from '@/app/utils/getActualActivities';
+import { redirect } from 'next/navigation';
 import { Suspense } from 'react'
-
-type ParamsType = {
-  filter?: string;
-  search?: string;
-  page?: string;
-}
 
 export default async function ActivityPage({ searchParams }: { searchParams: { [key: string]: string | string[] | undefined } }) {
   const search = searchParams.search
   const filter = searchParams.filter
-  const page = searchParams.page
+  const page = searchParams.page ?? "1"
 
   const { token, accountId } = getCookies()
-  const activityData: ActivityDataTypes[] = await getActivitiesData(accountId, token)
+  const activitiesData: ActivityDataTypes[] = await getActivitiesData(accountId, token)
 
-  const filteredActivities = getActualActivities(activityData, filter, search)
+  const filteredActivities = getActualActivities(activitiesData, filter, search)
   const start = (Number(page) - 1) * Number(ACTIVITIES_PER_PAGE)
   const end = start + Number(ACTIVITIES_PER_PAGE)
   const activitiesToShow = filteredActivities.slice(start, end)

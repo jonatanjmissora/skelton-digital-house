@@ -22,23 +22,18 @@ export const getActivityData = async (activityId: string, accountId: string, tok
     return activityData.filter(activity => activity.id === +activityId)[0]
 }
 
-export const getTransactionData = async (transactionId: string, accountId: string, token: string) => {
-    return getData(`api/accounts/${accountId}/transactions/${transactionId}`, token)
-}
-
 //*****************************************************************************
 //                  DEPOSIT
 export const postDeposit = async (accountId: string, newDeposit: object, token: string) => {
     return postData(`api/accounts/${accountId}/deposits`, newDeposit, token)
 }
-
+   
 //*****************************************************************************
-//                  TRANSFERENCE
-export const postTransference = async (accountId: string, newTransference: object, token: string) => {
-    return postData(`api/accounts/${accountId}/transferences`, newTransference, token)
+//                  TRANSACTION
+export const getTransactionData = async (transactionId: string, accountId: string, token: string) => {
+    return getData(`api/accounts/${accountId}/transactions/${transactionId}`, token)
 }
-
-export const postNewActivity = async (accountId: string, newActivity: object, token: string) => {
-    return
+export const postTransaction = async (accountId: string, newTransaction: object, token: string) => {
+    return postData(`api/accounts/${accountId}/transactions`, newTransaction, token)
 }
 

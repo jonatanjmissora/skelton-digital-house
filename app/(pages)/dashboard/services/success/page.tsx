@@ -1,19 +1,29 @@
-import { getService } from '@/app/services/services.services'
+import { getTransactionData } from '@/app/services/account.services'
+import { getCookies } from '@/app/services/getCookies.services'
+import Link from 'next/link'
 import React from 'react'
 
 export default async function ServiceSuccess({ searchParams }: { searchParams: { [key: string]: string | undefined } }) {
 
-  const serviceid = searchParams.serviceid ?? ""
-  const serviceData = await getService(serviceid)
+  const transactionId = searchParams.transactionid ?? ""
+  const {accountId, token} = getCookies()
+  const transactionData = await getTransactionData(transactionId, accountId, token)
+  console.log(transactionData)
 
   return (
     <>
       <div className='card'>
-        <h2>Ya realizaste tu pago</h2>
+        <h2 className='text-center'>Ya realizaste tu pago</h2>
       </div>
       <div className='card'>
-        <h2>Ya realizaste tu pago</h2>
+        <span>{transactionData.dated}</span>
+        <span>${transactionData.amount}</span>
+        <span>Para</span>
+        <span>{transactionData.description}</span>
+        <span>Tarjeta</span>
+        <span>No tengo data</span>
       </div>
+      <Link href={`/dashboard/`}>Ir al inicio</Link>
     </>
   )
 }
