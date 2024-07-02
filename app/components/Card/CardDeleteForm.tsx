@@ -6,6 +6,7 @@ import { deleteCard } from "../../services/card.services";
 import { useState } from "react";
 import SVGSpinner from "../SVG/SVGSpinner";
 import { toast } from 'sonner';
+import SubmitButton from "../SubmitButton";
 
 type CardDeleteFormTypes = {
     actualCardId: string;
@@ -24,7 +25,7 @@ export default function CardDeleteForm({ actualCardId, accountId, token }: CardD
             await deleteCard(actualCardId, accountId, token)
             router.push(`/dashboard/accounts/${accountId}/cards`)
             router.refresh();
-            toast("Tarjeta eliminada")
+            toast.success("Tarjeta eliminada")
         }
         catch (error) {
             if (error instanceof Error)
@@ -39,9 +40,9 @@ export default function CardDeleteForm({ actualCardId, accountId, token }: CardD
         <div className="card">
             <p>¿Quiere eliminar la siguiente tarjeta?</p>
             <div className='flex gap-4 mt-4'>
-                <button onClick={handleDelete} className='btn' disabled={isLoading}>
-                    {isLoading ? <SVGSpinner /> : "Eliminar"}
-                </button>
+                <div onClick={handleDelete}>
+                    <SubmitButton isLoading={isLoading} text={"Eliminar"} />
+                </div>
                 <Link className='btn' href={`/dashboard/accounts/${accountId}/cards`}>Cancelar</Link>
             </div>
         </div>

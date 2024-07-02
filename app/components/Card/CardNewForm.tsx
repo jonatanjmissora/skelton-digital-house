@@ -7,7 +7,8 @@ import Cards from 'react-credit-cards-2';
 import 'react-credit-cards-2/dist/es/styles-compiled.css';
 import { useState } from 'react';
 import SVGSpinner from '../SVG/SVGSpinner';
-import { Toaster, toast } from 'sonner';
+import { toast } from 'sonner';
+import SubmitButton from '../SubmitButton';
 
 type CardDataType = {
     number: string;
@@ -63,7 +64,7 @@ export default function CardNewForm({ accountId, token }: { accountId: string, t
             const { data, error } = await postCard(accountId, newCard, token)
             if (error) throw new Error(error)
             console.log("Nueva tarjeta creada", data)
-            toast("Tarjeta adherida correctamente")
+            toast.success("Tarjeta adherida correctamente")
             form.reset()
             router.push(`/dashboard/accounts/${accountId}/cards`)
             router.refresh();
@@ -80,16 +81,6 @@ export default function CardNewForm({ accountId, token }: { accountId: string, t
 
     return (
         <article className='flex gap-40'>
-            <button onClick={() => toast.success("que onda?")}>Toast</button>
-            <Toaster
-                toastOptions={{
-                    classNames: {
-                        error: 'bg-red-400',
-                        success: 'bg-green-400',
-
-                    },
-                }}
-            />
             <form className='flex flex-col gap-1' onSubmit={handleSubmit}>
                 <div className='flex gap-2 items-center my-4'>
                     <label htmlFor="number">Numero de tarjeta</label>
@@ -146,9 +137,7 @@ export default function CardNewForm({ accountId, token }: { accountId: string, t
                 </div>
 
                 <div className='flex justify-between gap-4 w-full mt-4'>
-                    <button type='submit' className='btn' disabled={isLoading}>
-                        {isLoading ? <SVGSpinner /> : "Agregar tarjeta"}
-                    </button>
+                    <SubmitButton isLoading={isLoading} text={'Agregar tarjeta'} />
                     <Link href={`/dashboard/accounts/${accountId}/cards`} className='btn'>Cancelar</Link>
                 </div>
                 {serverError && <span>{serverError}</span>}

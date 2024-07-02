@@ -1,5 +1,6 @@
 "use client"
 import SVGSpinner from "@/app/components/SVG/SVGSpinner"
+import SubmitButton from "@/app/components/SubmitButton"
 import { login } from "@/app/services/auth.services"
 import { useRouter } from "next/navigation"
 import { useState } from "react"
@@ -42,9 +43,7 @@ export default function Login() {
       <form onSubmit={handleSubmit} className="flex flex-col gap-4" >
         <input className="border border-gray-500 p-2 text-center" type="text" placeholder="email" name="email" defaultValue={"jonatanjmissora1@gmail.com"} required />
         <input className="border border-gray-500 p-2 text-center" type="password" placeholder="password" name="password" defaultValue={"123qQ*"} required />
-        <button type="submit" className="btn flex justify-center" disabled={isLoading}>
-          {isLoading ? <SVGSpinner /> : "Continuar"}
-        </button>
+        <SubmitButton isLoading={isLoading} text={"Continuar"} />
       </form>
       <p>{serverError}</p>
     </article>
