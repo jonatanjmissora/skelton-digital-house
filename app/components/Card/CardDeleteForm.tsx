@@ -4,7 +4,6 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { deleteCard } from "../../services/card.services";
 import { useState } from "react";
-import SVGSpinner from "../SVG/SVGSpinner";
 import { toast } from 'sonner';
 import SubmitButton from "../SubmitButton";
 

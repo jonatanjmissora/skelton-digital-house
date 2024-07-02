@@ -22,18 +22,17 @@ export default function UserEditForm({ userData, userId, token }: { userData: Us
         email: form.email.value,
         firstname: form.username.value.split(", ")[0],
         lastname: form.username.value.split(", ")[1],
-        dni: parseInt(form.dni.value, 10),
+        dni: userData.dni,
         phone: form.phone.value,
       }
 
       const userEditResp = await editUser(userId, newUser, token)
       console.log("Usuario editado", { userEditResp })
       toast.success("Usuario editado")
-      form.reset()
       router.push(`/dashboard/profile`)
       router.refresh();
     } catch (error: any) {
-      console.log(error.message)
+      toast.error("Usuario editado")
     }
     finally {
       setIsLoading(false)
@@ -59,13 +58,16 @@ export default function UserEditForm({ userData, userId, token }: { userData: Us
         className='border border-gray-500 p-2 text-center w-max'
       />
 
-      <input
-        type="text"
-        name="dni"
-        required
-        defaultValue={userData.dni}
-        className='border border-gray-500 p-2 text-center w-max'
-      />
+      <div className='flex gap-2 items-center'>
+        <input
+          type="text"
+          name="dni"
+          readOnly
+          defaultValue={userData.dni}
+          className='border border-gray-500 p-2 text-center w-max'
+        />
+        <span>(swagger no me deja cambiar dni)</span>
+      </div>
 
       <input
         type="text"

@@ -1,3 +1,5 @@
+import { cookies } from "next/headers"
+
 const SWAGGER = "https://digitalmoney.digitalhouse.com/"
 
 export const getData = async (endpoint: string, token?: string, userId?: string) => {
@@ -13,8 +15,9 @@ export const getData = async (endpoint: string, token?: string, userId?: string)
                 },
         })
         if (!res.ok) {
-            console.log(`${res.status} - ${res.statusText}`)
-            throw new Error("Failed to get: /api/accounts")
+            console.log(`${res.status} - ${res.statusText || "No text error"} - POST - ${SWAGGER}${endpoint}`)
+            const response = await res.json()
+            throw new Error(response.error)
         }
 
         return res.json();
@@ -45,7 +48,7 @@ export const postData = async (endpoint: string, dataObj?: object | null, token?
 
         console.log("---------------------------------- DATO CREADO en " + endpoint)
         const response = await res.json()
-        return { data: response }
+        return response
 
     } catch (error: any) {
         console.log("ERROR : ", error.message)
@@ -65,8 +68,9 @@ export const deleteData = async (endpoint: string, token: string) => {
                 },
         });
         if (!res.ok) {
-            console.log(`${res.status} - ${res.statusText}`)
-            throw new Error("Failed to delete: " + endpoint)
+            console.log(`${res.status} - ${res.statusText || "No text error"} - POST - ${SWAGGER}${endpoint}`)
+            const response = await res.json()
+            throw new Error(response.error)
         }
 
         console.log("---------------------------------- DATO BORRADO en " + endpoint)
@@ -91,16 +95,17 @@ export const patchData = async (endpoint: string, dataObj?: object | null, token
             body: JSON.stringify(dataObj ?? {})
         });
         if (!res.ok) {
-            console.log(`${res.status} - ${res.statusText}`)
-            throw new Error("Failed to patch: " + endpoint)
+            console.log(`${res.status} - ${res.statusText || "No text error"} - POST - ${SWAGGER}${endpoint}`)
+            const response = await res.json()
+            throw new Error(response.error)
         }
 
-        const response = await res.json()
         console.log("---------------------------------- DATO EDITADO en " + endpoint)
+        const response = await res.json()
+        return response
 
-        return response;
-    } catch (error) {
-        if (error instanceof Error)
-            console.log("ERROR", error.message)
+    } catch (error: any) {
+        console.log("ERROR : ", error.message)
+        return ({ error: error.message })
     }
 }

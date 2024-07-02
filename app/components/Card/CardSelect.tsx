@@ -29,27 +29,26 @@ export default function CardSelect({ cardsData }: { cardsData: CardsDataTypes[] 
   )
 }
 
-
-const CardRow = ({ card, 
-  selectedCard, 
-  setSelectedCard }: 
-  { card: CardsDataTypes, 
-    selectedCard: number, 
-    setSelectedCard: React.Dispatch<React.SetStateAction<number>> 
+const CardRow = ({ card,
+  selectedCard,
+  setSelectedCard }:
+  {
+    card: CardsDataTypes,
+    selectedCard: number,
+    setSelectedCard: React.Dispatch<React.SetStateAction<number>>
   }) => {
 
   const router = useRouter()
   const pathname = usePathname()
   const searchParams = useSearchParams()
-  
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const cardnum = e.currentTarget.id
-    console.log(cardnum)
-    
+
     const params = new URLSearchParams(searchParams.toString())
     params.set("cardnum", cardnum)
     router.replace(`${pathname}?${params.toString()}`)
-    
+
     setSelectedCard(+cardnum)
   }
 
@@ -59,7 +58,7 @@ const CardRow = ({ card,
         <span>terminada en {getLast4(card.number_id)}</span>
         <span>id: {card.number_id}</span>
       </label>
-      <input onChange={handleChange} type="radio" id={card.number_id.toString()} name="card" checked={selectedCard == card.number_id}/>
+      <input onChange={handleChange} type="radio" id={card.number_id.toString()} name="card" checked={selectedCard == card.number_id} />
     </div>
   )
 }

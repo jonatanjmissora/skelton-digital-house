@@ -4,22 +4,35 @@ import { useRouter } from 'next/navigation'
 import { editAlias } from '../../services/account.services'
 import Link from 'next/link'
 import { AccountDataTypes } from '@/app/types/account.types'
+import { toast } from 'sonner'
+import SubmitButton from '../SubmitButton'
+import { useState } from 'react'
 
 export default function AccountEditForm({ accountData, token }: { accountData: AccountDataTypes, token: string }) {
 
   const router = useRouter()
+  const [isLoading, setIsLoading] = useState<boolean>(false)
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
+    setIsLoading(true)
+    try {
 
-    const accountAlias = {
-      alias: event.currentTarget.alias.value
+      const accountAlias = {
+        alias: event.currentTarget.alias.value
+      }
+
+      const aliasEditResp = await editAlias(accountData.id.toString(), accountAlias, token)
+      console.log("Alias editado", { aliasEditResp })
+      toast.success("Alias editado")
+      router.push(`/dashboard/profile`)
+      router.refresh();
+    } catch (error: any) {
+      toast(error.message)
     }
-
-    const aliasEditResp = await editAlias(accountData.id.toString(), accountAlias, token)
-    console.log("Alias editado", { aliasEditResp })
-    router.push(`/dashboard/profile`)
-    router.refresh();
+    finally {
+      setIsLoading(false)
+    }
   }
 
   return (
@@ -40,7 +53,7 @@ export default function AccountEditForm({ accountData, token }: { accountData: A
         />
       </div>
       <div className='flex gap-4 mt-4'>
-        <button type="submit" className='btn w-max'>Editar</button>
+        <SubmitButton isLoading={isLoading} text={'Editar'} />
         <Link href={`/dashboard/profile`} className='btn'>Cancelar</Link>
       </div>
 

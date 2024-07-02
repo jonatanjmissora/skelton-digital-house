@@ -31,7 +31,7 @@ export default function CardNewForm({ accountId, token }: { accountId: string, t
 
     const [cardData, setCardData] = useState<CardDataType>(initialState);
     const [isLoading, setIsLoading] = useState<boolean>(false)
-    const [serverError, setServerError] = useState<string>("")
+    //const [serverError, setServerError] = useState<string>("")
     const { number, name, expiry, cvc, focus } = cardData
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -71,7 +71,8 @@ export default function CardNewForm({ accountId, token }: { accountId: string, t
 
         } catch (error) {
             if (error instanceof Error) {
-                setServerError(error.message)
+                //setServerError(error.message)
+                toast.error(error.message)
             }
         }
         finally {
@@ -140,7 +141,7 @@ export default function CardNewForm({ accountId, token }: { accountId: string, t
                     <SubmitButton isLoading={isLoading} text={'Agregar tarjeta'} />
                     <Link href={`/dashboard/accounts/${accountId}/cards`} className='btn'>Cancelar</Link>
                 </div>
-                {serverError && <span>{serverError}</span>}
+                {/*serverError && <span>{serverError}</span>*/}
             </form>
 
             <div>

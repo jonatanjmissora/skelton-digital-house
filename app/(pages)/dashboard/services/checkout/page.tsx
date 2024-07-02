@@ -1,4 +1,5 @@
 import CardSelect from '@/app/components/Card/CardSelect'
+import ServicePaymentForm from '@/app/components/Services/ServicePaymentForm'
 import { getAccountData, postTransaction } from '@/app/services/account.services'
 import { getCardsData } from '@/app/services/card.services'
 import { getCookies } from '@/app/services/getCookies.services'
@@ -18,25 +19,7 @@ export default async function ServiceCheckout({ searchParams }: { searchParams: 
   const cardsDataPromise: Promise<CardsDataTypes[]> = await getCardsData(accountId, token)
   const accountDataPromise: Promise<AccountDataTypes> = await getAccountData(token)
   const [serviceData, cardsData, accountData] = await Promise.all([serviceDataPromise, cardsDataPromise, accountDataPromise])
-
   if (serviceData.invoice_value === 0) serviceData.invoice_value = 1
-
-  const onSubmit = async (formData: FormData) => {
-    "use server"
-    if (accountData.available_amount >= serviceData.invoice_value * 100) {
-      const newTransaction = {
-        amount: -serviceData.invoice_value * 100,
-        dated: new Date(),
-        description: `Pago de ${serviceData.name}`
-      }
-      const transactionResp: ActivityDataTypes = await postTransaction(accountId, newTransaction, token)
-      const transactionid = transactionResp.id
-      redirect(`/dashboard/services/success?serviceid=${transactionid}`)
-    }
-    else {
-      redirect("/dashboard/services/payerror")
-    }
-  }
 
   return (
     <>
@@ -53,7 +36,7 @@ export default async function ServiceCheckout({ searchParams }: { searchParams: 
             Total a pagar
           </span>
           <span>
-            ${serviceData.invoice_value * 100}
+            ${Math.ceil(serviceData.invoice_value * 100)}
           </span>
         </div>
       </div>
@@ -61,11 +44,7 @@ export default async function ServiceCheckout({ searchParams }: { searchParams: 
         <h3>Tus tarjetas</h3>
         <CardSelect cardsData={cardsData} />
       </div>
-      <form
-        action={onSubmit}
-        className='w-full flex justify-end'>
-        <button className='btn' type="submit">Pagar</button>
-      </form>
+      <ServicePaymentForm serviceData={serviceData} accountData={accountData} token={token} />
     </>
   )
 }

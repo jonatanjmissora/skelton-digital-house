@@ -1,7 +1,7 @@
 import { getCookies } from '@/app/services/getCookies.services'
 import { redirect } from 'next/navigation'
 
-export default function DepositAmount({ searchParams }: { searchParams: { [key: string]: string | string[] | undefined }}) {
+export default function DepositAmount({ searchParams }: { searchParams: { [key: string]: string | string[] | undefined } }) {
 
   const { token, accountId } = getCookies()
   const amount = searchParams.amount
@@ -12,12 +12,11 @@ export default function DepositAmount({ searchParams }: { searchParams: { [key: 
     "use server"
     const amount = (formData.get("amount"))
     if (amount === "0") return
-    if(cvu)
+    if (cvu)
       redirect(`/dashboard/accounts/${accountId}/deposit/checkout?cvu=${cvu}&amount=${amount}`)
     else
       redirect(`/dashboard/accounts/${accountId}/deposit/checkout?cardnum=${cardnum}&amount=${amount}`)
-  }   
-  
+  }
 
   return (
     <div className="w-full flex flex-col gap-4 p-8 border border-gray-500">

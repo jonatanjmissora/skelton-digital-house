@@ -3,15 +3,28 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { logout } from "../services/auth.services";
+import SubmitButton from "./SubmitButton";
+import { useState } from "react";
+import { toast } from "sonner";
 
 export default function DashboardMenu({ accountId }: { accountId: string }) {
 
   const router = useRouter();
+  const [isLoading, setIsLoading] = useState<boolean>(false)
 
   const handleClick = async () => {
-    await logout()
-    router.push("/login")
-    router.refresh();
+    setIsLoading(true)
+    try {
+
+      await logout()
+      router.push("/login")
+      router.refresh();
+    } catch (error: any) {
+      toast.error(error.message)
+    }
+    finally {
+      setIsLoading(false)
+    }
   }
 
   return (
@@ -23,7 +36,9 @@ export default function DashboardMenu({ accountId }: { accountId: string }) {
         <Link href={`/dashboard/accounts/${accountId}/deposit`}>Cargar dinero</Link>
         <Link href="/dashboard/services">Pagar servicios</Link>
         <Link href={`/dashboard/accounts/${accountId}/cards`}>Tarjetas</Link>
-        <button onClick={handleClick}>Cerrar sesion</button>
+        <div onClick={handleClick}>
+          <SubmitButton isLoading={isLoading} text={"Cerrar sesion"} />
+        </div>
       </nav>
     </div>
   )
