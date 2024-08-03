@@ -25,7 +25,7 @@ export default async function ActivityPage({ searchParams }: { searchParams: { [
   return (
     <>
       <div className="w-full flex justify-between items-center p-2 px-8 border border-gray-500">
-        <SearchBar placeholder={"Busca en tu actividad"} />
+        <SearchBar placeholder={"Buscar en tu actividad"} />
         <ActivityFilter />
       </div>
       <div className="flex-1 w-full flex flex-col justify-between p-8 border border-gray-500">

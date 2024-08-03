@@ -28,7 +28,7 @@ export default async function Dashboard({ searchParams }: { searchParams: { [key
       </div>
 
       <div className="w-full flex flex-col justify-between p-8 py-2 border border-gray-500">
-        <SearchBar placeholder={"Busca en tu actividad"} />
+        <SearchBar placeholder={"Buscar en tu actividad"} />
       </div>
 
       <div className="card">
